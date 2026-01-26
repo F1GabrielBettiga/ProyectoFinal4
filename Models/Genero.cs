@@ -1,8 +1,12 @@
-﻿namespace ProyectoFinal4.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProyectoFinal4.Models
 {
     public class Genero
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(50)]
         public string Descripcion { get; set; }
         public List<Pelicula>? PeliculasGenero { get; set; }
 
