@@ -30,12 +30,72 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Genero/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJvXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Genero/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJvXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Genero/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJvXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Genero/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJvXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Genero/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Pelicula/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVsaWN1bGFcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Pelicula/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVsaWN1bGFcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Pelicula/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVsaWN1bGFcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Pelicula/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVsaWN1bGFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Pelicula/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVsaWN1bGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Plataforma/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdGFmb3JtYVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Plataforma/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdGFmb3JtYVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Plataforma/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdGFmb3JtYVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Plataforma/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdGFmb3JtYVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Plataforma/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdGFmb3JtYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Shared/Error.cshtml]
