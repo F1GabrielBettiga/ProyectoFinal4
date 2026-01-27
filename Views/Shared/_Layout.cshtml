@@ -1,57 +1,202 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProyectoFinal4</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Tipografías / íconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Global -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ProyectoFinal4.styles.css" asp-append-version="true" />
+
+    <!-- CSS por vista -->
+    @RenderSection("Styles", required: false)
+
+    <!-- Estilo global  -->
+    <style>
+        :root {
+            --bs-body-font-family: 'Inter', sans-serif;
+            --bs-body-bg: #101922;
+            --bs-body-color: #f8f9fa;
+        }
+
+        body {
+            font-family: var(--bs-body-font-family);
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+        }
+
+        .navbar {
+            background-color: rgba(17, 20, 24, 0.95) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+            /* Extra: hover y active más prolijo */
+            .navbar .nav-link {
+                transition: color .15s ease, opacity .15s ease;
+            }
+
+                .navbar .nav-link:hover {
+                    color: #fff !important;
+                    opacity: 1;
+                }
+
+                .navbar .nav-link.text-secondary {
+                    opacity: .85;
+                }
+
+                .navbar .nav-link.active {
+                    font-weight: 600;
+                }
+    </style>
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProyectoFinal4</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <!-- NAVBAR  -->
+        <nav class="navbar navbar-expand-lg sticky-top mb-4">
+            <div class="container-fluid px-4">
+
+                <!-- Brand -->
+                <a class="navbar-brand d-flex align-items-center gap-2 text-white fw-bold"
+                   asp-controller="Home" asp-action="Index">
+                    <div class="bg-primary rounded p-1 d-flex align-items-center justify-content-center"
+                         style="width:32px;height:32px;">
+                        <span class="material-symbols-outlined fs-5 text-white">movie_filter</span>
+                    </div>
+                    CineManage
+                </a>
+
+                <!-- Toggler -->
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="navbarContent">
+
+                    @* ====== ACTIVO AUTOMÁTICO====== *@
+                    @{
+                        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+                        string NavClass(string controller, string action) =>
+                        string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase) &&
+                        string.Equals(currentAction, action, StringComparison.OrdinalIgnoreCase)
+                        ? "nav-link text-white active"
+                        : "nav-link text-secondary";
+                    }
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="@NavClass("Home", "Index")"
+                               asp-controller="Home" asp-action="Index">
+                                Inicio
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="@NavClass("Pelicula", "Index")"
+                               asp-controller="Pelicula" asp-action="Index">
+                                Películas
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genero" asp-action="Index">Generos</a>
+                            <a class="@NavClass("Genero", "Index")"
+                               asp-controller="Genero" asp-action="Index">
+                                Géneros
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Plataforma" asp-action="Index">Plataformas</a>
+                            <a class="@NavClass("Plataforma", "Index")"
+                               asp-controller="Plataforma" asp-action="Index">
+                                Plataformas
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pelicula" asp-action="Index">Peliculas</a>
+                            <a class="@NavClass("Home", "Privacy")"
+                               asp-controller="Home" asp-action="Privacy">
+                                Privacy
+                            </a>
                         </li>
                     </ul>
+
+                    <!-- Right side -->
+                    <div class="d-flex align-items-center gap-3">
+
+                        <!-- Search -->
+                        <div class="input-group d-none d-md-flex" style="width: 250px;">
+                            <span class="input-group-text bg-transparent border-end-0 text-secondary"
+                                  style="border-color: rgba(255,255,255,0.1);">
+                                <span class="material-symbols-outlined fs-5">search</span>
+                            </span>
+                            <input type="text"
+                                   class="form-control border-start-0 ps-0"
+                                   placeholder="Quick search..."
+                                   style="border-color: rgba(255,255,255,0.1);" />
+                        </div>
+
+                        <!-- Notifications (decorativo por ahora) -->
+                        <button type="button" class="btn btn-link text-secondary position-relative p-2 text-decoration-none">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </button>
+
+                        <!-- User dropdown (decorativo por ahora) -->
+                        <div class="dropdown">
+                            <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                               href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="text-end me-2 d-none d-lg-block" style="line-height:1;">
+                                    <div class="fw-medium small">Alex Morgan</div>
+                                    <div class="small text-secondary" style="font-size:0.75rem;">Administrator</div>
+                                </div>
+
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb-mg7AAy9GB75Ut06P9IsLHmJ3mfO6_KiJQGYXdJlt2lSQJ3smUfgNiMZLk_sD7-P3AhlOQnF_GXZRt9LdEgR8LxM-XE1Wl063VT0wThXhy8Pk6WMg_o8Z7K5qhEbnO5j-ocrSW_nuYp6XCjpNvm413VUIiLebt3a-06yRlNXDigV7XnGbQs5s2AbU5N4GMpP3SQYohOMhbDzr1-kVYeF3u7EbdGo3wBpz9OZDooEwwrXIsIh4Bz4FCGQ-H3TwGnXAXP30Q-x5GxM"
+                                     alt="User" width="36" height="36"
+                                     class="rounded-circle border border-2 border-secondary" />
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+   
+    <div class="container-fluid p-0">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ProyectoFinal4 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted mt-5">
+        <div class="container-fluid px-4 py-3">
+            &copy; 2026 - ProyectoFinal4 - <a class="text-decoration-none" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- Scripts -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
