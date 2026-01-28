@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var busquedaPelicula = ViewBag.TxtBusqueda ?? "";
 }
 
 @section Styles {
@@ -16,97 +17,105 @@
         <p class="text-secondary">Descubre los últimos éxitos de taquilla y los clásicos atemporales.</p>
     </div>
 
+
+
     <!-- Filtros -->
-    <div class="glass-card p-4 mb-5">
-        <div class="row g-3 align-items-end">
+    <form method="get">
 
-            <!-- Search -->
-            <div class="col-12 col-lg-5">
-                <label class="form-label text-secondary small fw-medium ms-1">Buscar</label>
-                <div class="input-group">
-                    <span class="input-group-text glass-input border-end-0 text-secondary">
-                        <span class="material-symbols-outlined fs-5">search</span>
-                    </span>
-                    <input class="form-control glass-input border-start-0 ps-0 shadow-none"
-                           placeholder="Encuentra películas, genero, plataforma... "
-                           type="text" />
+
+        <div class="glass-card p-4 mb-5">
+
+            <div class="row g-3 align-items-end">
+
+                <!-- Search -->
+                <div class="col-12 col-lg-5">
+
+                    <div class="input-group">
+
+                        <button class="input-group-text glass-input border-end-0 text-secondary" type="submit">
+                            <span class="material-symbols-outlined fs-5">search</span>
+                        </button>
+
+                        <input name="txtBusqueda"
+                               value="@busquedaPelicula"
+                               class="form-control glass-input border-start-0 ps-0 shadow-none"
+                               placeholder="Buscar películas "
+                               type="text" />
+                    </div>
                 </div>
-            </div>
 
-            <!-- Genero -->
-            <div class="col-12 col-md-6 col-lg-2">
-                <label class="form-label text-secondary small fw-medium ms-1">Genero</label>
-                <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.GeneroId">
-                    <option selected>Todos</option>
-                </select>
-            </div>
+                <!-- Genero -->
+                <div class="col-12 col-md-6 col-lg-2">
 
-            <!-- Plataforma -->
-            <div class="col-12 col-md-6 col-lg-2">
-                <label class="form-label text-secondary small fw-medium ms-1">Plataforma</label>
-                <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.PlataformaId">
-                    <option selected>Todos</option>
-                </select>
-            </div>
-
-            <!-- Ordenar por -->
-            <div class="col-12 col-lg-3">
-                <label class="form-label text-secondary small fw-medium ms-1">Ordenar por</label>
-                <div class="input-group">
-                    <select class="form-select glass-input shadow-none select-glass">
-                        <option selected>Rating (High to Low)</option>
-                        <option>Release Date (Newest)</option>
-                        <option>Name (A-Z)</option>
+                    <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.GeneroId">
+                        <option selected>Genero</option>
                     </select>
-                    <span class="input-group-text glass-input border-start-0 text-secondary">
-                        <span class="material-symbols-outlined fs-5">sort</span>
-                    </span>
                 </div>
+
+                <!-- Plataforma -->
+                <div class="col-12 col-md-6 col-lg-2">
+                    <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.PlataformaId">
+                        <option selected>Plataforma</option>
+                    </select>
+                </div>
+
+                <!-- Ordenar por -->
+                <div class="col-12 col-lg-3">
+                    <div class="input-group">
+                        <select class="form-select glass-input shadow-none select-glass">
+                            <option selected>Ordenar por</option>
+                            <option>Release Date (Newest)</option>
+                            <option>Name (A-Z)</option>
+                        </select>
+                        <span class="input-group-text glass-input border-start-0 text-secondary">
+                            <span class="material-symbols-outlined fs-5">sort</span>
+                        </span>
+                    </div>
+                </div>
+
             </div>
-
         </div>
-    </div>
-
+    </form>
     <!-- Grid Películas -->
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 mb-5">
 
         @foreach (var item in Model)
         {
-        <div class="col">
+            <div class="col">
                 <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id" class="movie-card hover-lift text-decoration-none">
-                @*IMAGEN*@
-                <div class="poster-container">
-                    <img alt="Interstellar Poster"
-                         src=@item.PosterUrlPortada />
-                    
-                </div>
+                    @*IMAGEN*@
+                    <div class="poster-container">
+                        <img alt="Interstellar Poster"
+                             src=@item.PosterUrlPortada />
 
-                <div class="card-body p-3 d-flex flex-column flex-grow-1">
+                    </div>
+
+                    <div class="card-body p-3 d-flex flex-column flex-grow-1">
                         @*TITULO*@
-                    <h5 class="card-title text-white fw-bold fs-6 mb-1 text-truncate">@item.Titulo</h5>
+                        <h5 class="card-title text-white fw-bold fs-6 mb-1 text-truncate">@item.Titulo</h5>
                         @*GENERO + AÑO*@
-                    <p class="card-text text-secondary small mb-3">@item.Genero.Descripcion • @item.Plataforma.Nombre</p>
+                        <p class="card-text text-secondary small mb-3">@item.Genero.Descripcion • @item.Plataforma.Nombre</p>
 
-                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center gap-1 text-primary-custom">
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-1 text-primary-custom">
                                 @*ESTRELLAS*@
-                            <span class="material-symbols-outlined fs-6 star-fill">star</span>
-                            <span class="fw-bold text-white small">8.7</span>
-                        </div>
+                                <span class="material-symbols-outlined fs-6 star-fill">star</span>
+                                <span class="fw-bold text-white small">8.7</span>
+                            </div>
                             @*DURACION*@
                             <small class="text-secondary duration-text">
                                 @if (item.MinutosDuracion >= 60)
                                 {
                                     @(item.MinutosDuracion / 60)
-                            
+
                                     @:h
                                 }
                                 @(item.MinutosDuracion % 60)m
                             </small>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div> 
+                </a>
+            </div>
         }
     </div>
 
@@ -129,6 +138,7 @@
                        asp-controller="Home"
                        asp-action="Index"
                        asp-route-page="@(current - 1)"
+                       asp-route-txtBusqueda="@busquedaPelicula"
                        aria-label="Anterior">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </a>
@@ -138,7 +148,11 @@
                 @if (start > 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="1">1</a>
+                        <a class="page-link"
+                           asp-controller="Home"
+                           asp-action="Index"
+                           asp-route-page="1"
+                           asp-route-txtBusqueda="@busquedaPelicula">1</a>
                     </li>
 
                     @if (start > 2)
@@ -153,7 +167,11 @@
                 @for (int i = start; i <= end; i++)
                 {
                     <li class="page-item @(i == current ? "active" : "")">
-                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@i">@i</a>
+                        <a class="page-link"
+                           asp-controller="Home"
+                           asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-txtBusqueda="@busquedaPelicula">@i</a>
                     </li>
                 }
 
@@ -168,7 +186,11 @@
                     }
 
                     <li class="page-item">
-                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@total">@total</a>
+                        <a class="page-link"
+                           asp-controller="Home"
+                           asp-action="Index"
+                           asp-route-page="@total"
+                           asp-route-txtBusqueda="@busquedaPelicula">@total</a>
                     </li>
                 }
 
@@ -178,6 +200,7 @@
                        asp-controller="Home"
                        asp-action="Index"
                        asp-route-page="@(current + 1)"
+                       asp-route-txtBusqueda="@busquedaPelicula"
                        aria-label="Siguiente">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </a>

@@ -18,8 +18,8 @@ namespace ProyectoFinal4.Controllers
             _context = context;
         }
 
-
-        public async Task<IActionResult> Index(int page = 1)
+        //GET
+        public async Task<IActionResult> Index(int page = 1, string txtBusqueda = "")
         {
             const int pageSize = 10; //numero de items por pagina
 
@@ -33,8 +33,19 @@ namespace ProyectoFinal4.Controllers
             }
 
 
+            // esto me genera una consulta no ejecutada todavia para que le podamos ir agregando parametros
+            var consulta = _context.Peliculas.AsQueryable();
+
+            //Configuramos el filtro de busqueda por titulo
+            if (!string.IsNullOrEmpty(txtBusqueda))
+            {
+                consulta = consulta.Where(p => p.Titulo.Contains(txtBusqueda));
+            }
+
+
+
             // total items
-            var totalItems = await _context.Peliculas.CountAsync(); // contar todas las peliculas
+            var totalItems = await consulta.CountAsync(); // contar todas las peliculas
 
             //aca vamos a chequer si la page es mayor al total de paginas y si lo es la ponemos en la ultima pagina
             if (page > totalItems / pageSize + 1)
@@ -44,7 +55,7 @@ namespace ProyectoFinal4.Controllers
 
 
             // traer las pelicuas con su genero y plataforma usando y incluimos un paginacion con skip y take
-            var peliculas = await _context.Peliculas
+            var peliculas = await consulta
                 .Include(p => p.Genero)
                 .Include(p => p.Plataforma)
                 .OrderBy(p => p.Id)
@@ -55,6 +66,7 @@ namespace ProyectoFinal4.Controllers
             ViewBag.CurrentPage = page; // pagina actual
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize); // total de paginas 
             ViewBag.PageSize = pageSize; // numero de items por pagina 
+            ViewBag.TxtBusqueda = txtBusqueda; // texto de busqueda actual
 
             return View(peliculas);
         }
