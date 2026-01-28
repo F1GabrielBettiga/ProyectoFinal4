@@ -1,8 +1,125 @@
-﻿@{
+﻿@model IEnumerable<ProyectoFinal4.Models.Pelicula>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Home/index.css" asp-append-version="true" />
+}
+
+
+<main class="container-xl pt-3 pb-5 mt-0">
+
+    <div class="mb-4 mt-0">
+        <h1 class="display-5 fw-bold text-white mb-2">Explora películas</h1>
+        <p class="text-secondary">Descubre los últimos éxitos de taquilla y los clásicos atemporales.</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="glass-card p-4 mb-5">
+        <div class="row g-3 align-items-end">
+
+            <!-- Search -->
+            <div class="col-12 col-lg-5">
+                <label class="form-label text-secondary small fw-medium ms-1">Buscar</label>
+                <div class="input-group">
+                    <span class="input-group-text glass-input border-end-0 text-secondary">
+                        <span class="material-symbols-outlined fs-5">search</span>
+                    </span>
+                    <input class="form-control glass-input border-start-0 ps-0 shadow-none"
+                           placeholder="Encuentra películas, genero, plataforma... "
+                           type="text" />
+                </div>
+            </div>
+
+            <!-- Genero -->
+            <div class="col-12 col-md-6 col-lg-2">
+                <label class="form-label text-secondary small fw-medium ms-1">Genero</label>
+                <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.GeneroId">
+                    <option selected>Todos</option>
+                </select>
+            </div>
+
+            <!-- Plataforma -->
+            <div class="col-12 col-md-6 col-lg-2">
+                <label class="form-label text-secondary small fw-medium ms-1">Plataforma</label>
+                <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.PlataformaId">
+                    <option selected>Todos</option>
+                </select>
+            </div>
+
+            <!-- Ordenar por -->
+            <div class="col-12 col-lg-3">
+                <label class="form-label text-secondary small fw-medium ms-1">Ordenar por</label>
+                <div class="input-group">
+                    <select class="form-select glass-input shadow-none select-glass">
+                        <option selected>Rating (High to Low)</option>
+                        <option>Release Date (Newest)</option>
+                        <option>Name (A-Z)</option>
+                    </select>
+                    <span class="input-group-text glass-input border-start-0 text-secondary">
+                        <span class="material-symbols-outlined fs-5">sort</span>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Grid Películas -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 mb-5">
+
+        @foreach (var item in Model)
+        {
+        <div class="col">
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id" class="movie-card hover-lift text-decoration-none">
+                @*IMAGEN*@
+                <div class="poster-container">
+                    <img alt="Interstellar Poster"
+                         src=@item.PosterUrlPortada />
+                    
+                </div>
+
+                <div class="card-body p-3 d-flex flex-column flex-grow-1">
+                        @*TITULO*@
+                    <h5 class="card-title text-white fw-bold fs-6 mb-1 text-truncate">@item.Titulo</h5>
+                        @*GENERO + AÑO*@
+                    <p class="card-text text-secondary small mb-3">@item.Genero.Descripcion • @item.Plataforma.Nombre</p>
+
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-1 text-primary-custom">
+                                @*ESTRELLAS*@
+                            <span class="material-symbols-outlined fs-6 star-fill">star</span>
+                            <span class="fw-bold text-white small">8.7</span>
+                        </div>
+                            @*DURACION*@
+                            <small class="text-secondary duration-text">
+                                @if (item.MinutosDuracion >= 60)
+                                {
+                                    @(item.MinutosDuracion / 60)
+                            
+                                    @:h
+                                }
+                                @(item.MinutosDuracion % 60)m
+                            </small>
+                    </div>
+                </div>
+            </a>
+        </div> 
+        }
+    </div>
+
+    <!-- Load more -->
+    <div class="d-flex justify-content-center pb-5">
+        <button class="btn btn-glass px-4 py-3 d-flex align-items-center gap-2 rounded-3" type="button">
+            <span>Cargar más</span>
+            <span class="material-symbols-outlined">expand_more</span>
+        </button>
+    </div>
+
+</main>
+
+
+
+
