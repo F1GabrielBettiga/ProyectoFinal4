@@ -2,7 +2,11 @@
 
 @{
     ViewData["Title"] = "Gestión de Películas";
+    var busquedaPelicula = ViewBag.TxtBusqueda ?? "";
+    var generoId = ViewBag.GeneroId ?? 0;
+    var plataformaId = ViewBag.PlataformaId ?? 0;
 }
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/pages/Pelicula/index.css" asp-append-version="true" />
@@ -42,56 +46,59 @@
 
         </div>
 
-        <!-- Toolbar -->
-        <div class="card glass-effect mb-4 rounded-3 border-0">
-            <div class="card-body p-4">
-                <div class="row g-3">
+        <!-- Filtros -->
+        <form method="get">
 
-                    <div class="col-md-5 col-lg-6">
-                        <div class="input-group">
-                            <span class="input-group-text bg-transparent text-secondary border-end-0">
-                                <span class="material-symbols-outlined">search</span>
-                            </span>
-                            @*FILTRO 1*@
-                            <input class="form-control border-start-0 ps-0"
-                                   placeholder="Filtrar por título, director o palabra clave..."
+
+            <div class="glass-card p-4 mb-5 admin-filters">
+                <div class="row g-3 align-items-end">
+
+                    <!-- Buscar -->
+                    <div class="col-12 col-lg-5">
+                        <div class="input-group w-100">
+                            <button class="input-group-text glass-input border-end-0 text-secondary" type="submit">
+                                <span class="material-symbols-outlined fs-5">search</span>
+                            </button>
+
+                            <input name="txtBusqueda"
+                                   value="@busquedaPelicula"
+                                   class="form-control glass-input border-start-0 ps-0 shadow-none"
+                                   placeholder="Buscar películas"
                                    type="text" />
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-text bg-transparent text-secondary border-end-0">
-                                <span class="material-symbols-outlined">category</span>
-                            </span>
-                            @*FILTRO 2*@
-                            <select class="form-select border-start-0 ps-0">
-                                <option selected> Todos los Generos</option>
-                                <option>Action</option>
-                                <option>Comedy</option>
-                                <option>Drama</option>
-                                <option>Sci-Fi</option>
-                            </select>
-                        </div>
+                    <!-- Género -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <select name="generoId"
+                                asp-items="ViewBag.GeneroId"
+                                onchange="this.form.submit()"
+                                class="form-select glass-input shadow-none select-glass w-100">
+                        </select>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-text bg-transparent text-secondary border-end-0">
-                                <span class="material-symbols-outlined">sort</span>
-                            </span>
-                            @*FILTRO 3*@
-                            <select class="form-select border-start-0 ps-0">
-                                <option selected> Sin filtro</option>
-                                <option>Highest Rated</option>
-                                <option>Year (Desc)</option>
-                                <option>Title (A-Z)</option>
-                            </select>
-                        </div>
+                    <!-- Plataforma -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <select name="plataformaId"
+                                asp-items="ViewBag.PlataformaId"
+                                onchange="this.form.submit()"
+                                class="form-select glass-input shadow-none select-glass w-100">
+                        </select>
                     </div>
+
+                    <!-- Limpiar filtros -->
+                    <div class="col-12 col-lg-1 d-flex justify-content-end">
+                        <a asp-controller="Pelicula"
+                           asp-action="Index"
+                           class="btn btn-glass w-100 d-flex align-items-center justify-content-center"
+                           title="Limpiar filtros">
+                            <span class="material-symbols-outlined fs-5">delete_sweep</span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
-        </div>
+        </form>
 
         <!-- Table -->
         <div class="card glass-effect border-0 rounded-3 shadow-sm overflow-hidden">
@@ -109,76 +116,163 @@
                     </thead>
 
                     <tbody>
-                        @foreach (var item in Model){
-                        <tr class="hover-lift">
-                            @*IMAGEN*@
-                            <td class="ps-4">
-                                <img class="img-thumbnail bg-dark border-secondary p-1 img-poster"
-                                     src=@item.PosterUrlPortada />
-                            </td>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover-lift">
+                                @*IMAGEN*@
+                                <td class="ps-4">
+                                    <img class="img-thumbnail bg-dark border-secondary p-1 img-poster"
+                                         src=@item.PosterUrlPortada />
+                                </td>
 
-                            <td>
-                                <div class="d-flex flex-column">
+                                <td>
+                                    <div class="d-flex flex-column">
                                         @*TITULO*@
-                                    <a class="text-white text-decoration-none fw-bold" href="#">
+                                        <a class="text-white text-decoration-none fw-bold" href="#">
                                             @item.Titulo
-                                    </a>
-                                </div>
-                            </td>
+                                        </a>
+                                    </div>
+                                </td>
 
-                            <td>
+                                <td>
                                     @*GENERO*@
-                                <span class="badge badge-soft-primary rounded-pill px-3 fw-normal">
+                                    <span class="badge badge-soft-primary rounded-pill px-3 fw-normal">
                                         @item.Genero.Descripcion
-                                </span>
-                            </td>
+                                    </span>
+                                </td>
 
-                            <td>
+                                <td>
                                     @*RATING*@
-                                <div class="d-flex align-items-center text-warning-custom">
-                                    <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
-                                    <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
-                                    <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
-                                    <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
-                                    <span class="material-symbols-outlined fs-6">star_half</span>
-                                    <span class="ms-2 small text-secondary">(8.9)</span>
-                                </div>
-                            </td>
+                                    <div class="d-flex align-items-center text-warning-custom">
+                                        <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined fs-6" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined fs-6">star_half</span>
+                                        <span class="ms-2 small text-secondary">(8.9)</span>
+                                    </div>
+                                </td>
                                 @*ESTRENO*@
-                            <td class="text-light">@item.FechaLanzamiento.Year</td>
-                                
-                            <td class="text-end pe-4">
-                                    @*ACCIONES*@
-                                <div class="btn-group btn-group-sm">
+                                <td class="text-light">@item.FechaLanzamiento.Year</td>
 
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary border-0 text-white-50 btn-icon" title="Editar" ><span class="material-symbols-outlined fs-5">Edit</span></a> |
+                                <td class="text-end pe-4">
+                                    @*ACCIONES*@
+                                    <div class="btn-group btn-group-sm">
+
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary border-0 text-white-50 btn-icon" title="Editar"><span class="material-symbols-outlined fs-5">Edit</span></a> |
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary border-0 text-white-50 btn-icon" title="Detalles"><span class="material-symbols-outlined fs-5">visibility</span></a> |
                                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger border-0 text-danger btn-icon" title="Borrar"><span class="material-symbols-outlined fs-5">delete</span></a>
 
-                                </div>
-                            </td>
-                        </tr>
+                                    </div>
+                                </td>
+                            </tr>
                         }
                     </tbody>
-                   
+
                 </table>
             </div>
-            
-            <!-- Footer -->
-            <div class="card-footer border-top border-secondary border-opacity-10 bg-transparent py-3">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-                    <div class="small text-secondary">
-                        Showing <span class="fw-bold text-white">1</span> to
-                        <span class="fw-bold text-white">5</span> of
-                        <span class="fw-bold text-white">42</span> results
-                    </div>
 
-                    <ul class="pagination pagination-sm mb-0">
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <!-- Paginado -->
+            <div class="d-flex justify-content-center pb-4 pagination-footer">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm pagination-glass mb-0">
+                        @{
+                            var current = ViewBag.CurrentPage as int? ?? 1;
+                            var total = ViewBag.TotalPages as int? ?? 1;
+
+                            int start = Math.Max(1, current - 2);
+                            int end = Math.Min(total, current + 2);
+
+
+                        }
+
+                        <!-- Anterior (icono) -->
+                        <li class="page-item @(current <= 1 ? "disabled" : "")">
+                            <a class="page-link"
+                               asp-controller="Pelicula"
+                               asp-action="Index"
+                               asp-route-page="@(current - 1)"
+                               asp-route-txtBusqueda="@busquedaPelicula"
+                               asp-route-generoId="@generoId"
+                               asp-route-plataformaId="@plataformaId"
+                               aria-label="Anterior">
+                                <span class="material-symbols-outlined">chevron_left</span>
+                            </a>
+                        </li>
+
+                        <!-- Primera + puntos si hace falta -->
+                        @if (start > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link"
+                                   asp-controller="Pelicula"
+                                   asp-action="Index"
+                                   asp-route-page="1"
+                                   asp-route-txtBusqueda="@busquedaPelicula"
+                                   asp-route-generoId="@generoId"
+                                   asp-route-plataformaId="@plataformaId">1</a>
+                            </li>
+
+                            @if (start > 2)
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link page-link-dots">…</span>
+                                </li>
+                            }
+                        }
+
+                        <!-- Ventana de páginas -->
+                        @for (int i = start; i <= end; i++)
+                        {
+                            <li class="page-item @(i == current ? "active" : "")">
+                                <a class="page-link"
+                                   asp-controller="Pelicula"
+                                   asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-txtBusqueda="@busquedaPelicula"
+                                   asp-route-generoId="@generoId"
+                                   asp-route-plataformaId="@plataformaId">@i</a>
+                            </li>
+                        }
+
+                        <!-- Puntos + última si hace falta -->
+                        @if (end < total)
+                        {
+                            @if (end < total - 1)
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link page-link-dots">…</span>
+                                </li>
+                            }
+
+                            <li class="page-item">
+                                <a class="page-link"
+                                   asp-controller="Pelicula"
+                                   asp-action="Index"
+                                   asp-route-page="@total"
+                                   asp-route-txtBusqueda="@busquedaPelicula"
+                                   asp-route-generoId="@generoId"
+                                   asp-route-plataformaId="@plataformaId">@total</a>
+                            </li>
+                        }
+
+                        <!-- Siguiente (icono) -->
+                        <li class="page-item @(current >= total ? "disabled" : "")">
+                            <a class="page-link"
+                               asp-controller="Pelicula"
+                               asp-action="Index"
+                               asp-route-page="@(current + 1)"
+                               asp-route-txtBusqueda="@busquedaPelicula"
+                               asp-route-generoId="@generoId"
+                               asp-route-plataformaId="@plataformaId"
+                               aria-label="Siguiente">
+                                <span class="material-symbols-outlined">chevron_right</span>
+                            </a>
+                        </li>
+
                     </ul>
-                </div>
+                </nav>
+
             </div>
 
         </div>

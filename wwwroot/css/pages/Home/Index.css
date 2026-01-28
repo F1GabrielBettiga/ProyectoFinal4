@@ -1,4 +1,4 @@
-﻿/* HOME CSS (sin navbar) */
+﻿/* HOME CSS */
 
 :root {
     --primary-color: #ecb613;
@@ -33,7 +33,7 @@
         box-shadow: 0 0 0 0.25rem rgba(236, 182, 19, 0.25);
     }
 
-/* ✅ Select estilo glass + texto legible */
+/* select estilo glass + texto legible */
 .select-glass {
     background-color: rgba(24, 33, 43, 0.6) !important;
     border: 1px solid var(--glass-border) !important;
@@ -47,7 +47,7 @@
         color: #fff !important;
     }
 
-    /* Importante: las opciones del desplegable (depende del navegador) */
+   
     .select-glass option {
         background: #0b1118;
         color: #e9ecef;
@@ -209,4 +209,87 @@
         background-color: rgba(24, 33, 43, 0.9);
         border-color: var(--primary-color);
         box-shadow: 0 0 0 0.25rem rgba(236, 182, 19, 0.25);
+    }
+
+
+/* =================================================
+   HOME: VARIABLES (dorado) para estilo "admin"
+   ================================================= */
+:root {
+    --home-accent: #ecb613; /* dorado */
+    --home-panel: rgba(17, 24, 39, .72); /* panel base */
+    --home-panel-2: rgba(30, 41, 59, .72);
+    --home-stroke: rgba(255,255,255,.10);
+    --home-glow: 0 0 0 .25rem rgba(236,182,19,.18);
+}
+
+/* =================================================
+   HOME: CONTENEDOR DE FILTROS (igual a Películas, pero dorado)
+   Se activa SOLO con .home-filters
+   ================================================= */
+.home-filters {
+    background: linear-gradient(135deg, var(--home-panel), var(--home-panel-2));
+    border: 1px solid var(--home-stroke);
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+    /* “lucecita” sutil (dorado) */
+    .home-filters::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: radial-gradient(circle at 20% 30%, rgba(236,182,19,.18), transparent 45%), radial-gradient(circle at 70% 60%, rgba(236,182,19,.10), transparent 50%);
+        filter: blur(18px);
+        pointer-events: none;
+    }
+
+    /* =================================================
+   HOME: INPUTS/SELECTS (mismo comportamiento que Películas)
+   ================================================= */
+    .home-filters .glass-input {
+        transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+        .home-filters .glass-input:hover {
+            background: rgba(255,255,255,.07) !important;
+            border-color: rgba(236,182,19,.35) !important;
+            box-shadow: 0 10px 24px rgba(0,0,0,.22);
+            transform: translateY(-1px);
+        }
+
+        .home-filters .glass-input:focus {
+            border-color: var(--home-accent) !important;
+            box-shadow: var(--home-glow) !important;
+        }
+
+    /* =================================================
+   BUSCADOR INTEGRADO (lupa + input como en Películas)
+   ================================================= */
+    .home-filters .input-group {
+        border-radius: .9rem;
+        overflow: hidden;
+    }
+
+    /* Lupa: sin redondeo derecho */
+    .home-filters .input-group-text.glass-input {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: .9rem !important;
+        border-bottom-left-radius: .9rem !important;
+    }
+
+    /* Input: sin redondeo izquierdo */
+    .home-filters .form-control.glass-input {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: .9rem !important;
+        border-bottom-right-radius: .9rem !important;
+    }
+
+    /* borde/glow al pasar por arriba */
+    .home-filters .input-group:hover {
+        box-shadow: 0 0 0 1px rgba(236,182,19,.35);
     }

@@ -20,10 +20,131 @@ namespace ProyectoFinal4.Controllers
         }
 
         // GET: Pelicula
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, string txtBusqueda = "", int generoId = 0, int plataformaId = 0)
         {
-            var movieDbContext = _context.Peliculas.Include(p => p.Genero).Include(p => p.Plataforma);
-            return View(await movieDbContext.ToListAsync());
+            const int pageSize = 10; // número de items por página
+
+            /* ================================
+             * CARGA DE SELECTS (FILTROS)
+             * ================================ */
+
+            // Cargamos los Plataformas ordenados
+            var listaDePlataformas = await _context.Plataformas
+                .OrderBy(g => g.Nombre)
+                .ToListAsync();
+
+            // Agregamos la opción "Plataformas" con Id = 0
+            // Esto nos sirve para saber que NO hay filtro aplicado
+            listaDePlataformas.Insert(0, new Plataforma
+            {
+                Id = 0,
+                Nombre = "Plataformas"
+            });
+
+            // Creamos el SelectList y marcamos el Plataformas seleccionado
+            ViewBag.PlataformaId = new SelectList(
+                listaDePlataformas,
+                "Id",
+                "Nombre",
+                plataformaId
+            );
+
+            // Cargamos los géneros ordenados
+            var listaDeGeneros = await _context.Generos
+                .OrderBy(g => g.Descripcion)
+                .ToListAsync();
+
+            // Agregamos la opción "Generos" con Id = 0
+            // Esto nos sirve para saber que NO hay filtro aplicado
+            listaDeGeneros.Insert(0, new Genero
+            {
+                Id = 0,
+                Descripcion = "Generos"
+            });
+
+            // Creamos el SelectList y marcamos el género seleccionado
+            ViewBag.GeneroId = new SelectList(
+                listaDeGeneros,
+                "Id",
+                "Descripcion",
+                generoId
+            );
+
+            /* ================================
+             * VALIDACIONES DE PAGINADO
+             * ================================ */
+
+            // Chequeamos que la página no sea menor a 1
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            /* ================================
+             * ARMADO DE LA CONSULTA
+             * ================================ */
+
+            // Creamos una consulta base (todavía no se ejecuta)
+            var consulta = _context.Peliculas.AsQueryable();
+
+            // Filtro por título (búsqueda)
+            if (!string.IsNullOrEmpty(txtBusqueda))
+            {
+                consulta = consulta.Where(p => p.Titulo.Contains(txtBusqueda));
+            }
+
+            // Filtro por género (si no es 0)
+            if (generoId > 0)
+            {
+                consulta = consulta.Where(p => p.GeneroId == generoId);
+            }
+
+            // Filtro por plataforma (si no es 0)
+            if (plataformaId > 0)
+            {
+                consulta = consulta.Where(p => p.PlataformaId == plataformaId);
+            }
+
+            /* ================================
+             * PAGINADO
+             * ================================ */
+
+            // Contamos el total de registros filtrados
+            var totalItems = await consulta.CountAsync();
+
+            // Calculamos el total de páginas
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            // Si la página es mayor al total, la ajustamos
+            if (page > totalPages)
+            {
+                page = totalPages == 0 ? 1 : totalPages;
+            }
+
+            /* ================================
+             * OBTENER PELÍCULAS
+             * ================================ */
+
+            // Traemos las películas con género y plataforma
+            // Aplicamos paginado con Skip y Take
+            var peliculas = await consulta
+                .Include(p => p.Genero)
+                .Include(p => p.Plataforma)
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            /* ================================
+             * VIEWBAGS PARA LA VISTA
+             * ================================ */
+
+            ViewBag.CurrentPage = page; // página actual
+            ViewBag.TotalPages = totalPages; // total de páginas
+            ViewBag.PageSize = pageSize; // items por página
+            ViewBag.TxtBusqueda = txtBusqueda; // texto de búsqueda actual
+
+            return View(peliculas);
         }
 
         // GET: Pelicula/Details/5
