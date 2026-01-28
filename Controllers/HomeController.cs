@@ -19,42 +19,113 @@ namespace ProyectoFinal4.Controllers
         }
 
         //GET
-        public async Task<IActionResult> Index(int page = 1, string txtBusqueda = "")
+        public async Task<IActionResult> Index(int page = 1, string txtBusqueda = "", int generoId = 0, int plataformaId = 0)
         {
-            const int pageSize = 10; //numero de items por pagina
+            const int pageSize = 10; // número de items por página
 
-            ViewBag.GeneroId = new SelectList(_context.Generos, "Id", "Descripcion");
-            ViewBag.PlataformaId = new SelectList(_context.Plataformas, "Id", "Nombre");
+            /* ================================
+             * CARGA DE SELECTS (FILTROS)
+             * ================================ */
 
-            //aca vamos a chequear si pagina es menor a 1 por si alguien pone un numero negativo
+            // Cargamos los Plataformas ordenados
+            var listaDePlataformas = await _context.Plataformas
+                .OrderBy(g => g.Nombre)
+                .ToListAsync();
+
+            // Agregamos la opción "Plataformas" con Id = 0
+            // Esto nos sirve para saber que NO hay filtro aplicado
+            listaDePlataformas.Insert(0, new Plataforma
+            {
+                Id = 0,
+                Nombre = "Plataformas"
+            });
+
+            // Creamos el SelectList y marcamos el Plataformas seleccionado
+            ViewBag.PlataformaId = new SelectList(
+                listaDePlataformas,
+                "Id",
+                "Nombre",
+                plataformaId
+            );
+
+            // Cargamos los géneros ordenados
+            var listaDeGeneros = await _context.Generos
+                .OrderBy(g => g.Descripcion)
+                .ToListAsync();
+
+            // Agregamos la opción "Generos" con Id = 0
+            // Esto nos sirve para saber que NO hay filtro aplicado
+            listaDeGeneros.Insert(0, new Genero
+            {
+                Id = 0,
+                Descripcion = "Generos"
+            });
+
+            // Creamos el SelectList y marcamos el género seleccionado
+            ViewBag.GeneroId = new SelectList(
+                listaDeGeneros,
+                "Id",
+                "Descripcion",
+                generoId
+            );
+
+            /* ================================
+             * VALIDACIONES DE PAGINADO
+             * ================================ */
+
+            // Chequeamos que la página no sea menor a 1
             if (page < 1)
             {
                 page = 1;
             }
 
+            /* ================================
+             * ARMADO DE LA CONSULTA
+             * ================================ */
 
-            // esto me genera una consulta no ejecutada todavia para que le podamos ir agregando parametros
+            // Creamos una consulta base (todavía no se ejecuta)
             var consulta = _context.Peliculas.AsQueryable();
 
-            //Configuramos el filtro de busqueda por titulo
+            // Filtro por título (búsqueda)
             if (!string.IsNullOrEmpty(txtBusqueda))
             {
                 consulta = consulta.Where(p => p.Titulo.Contains(txtBusqueda));
             }
 
-
-
-            // total items
-            var totalItems = await consulta.CountAsync(); // contar todas las peliculas
-
-            //aca vamos a chequer si la page es mayor al total de paginas y si lo es la ponemos en la ultima pagina
-            if (page > totalItems / pageSize + 1)
+            // Filtro por género (si no es 0)
+            if (generoId > 0)
             {
-                page = (totalItems / pageSize) + 1;
+                consulta = consulta.Where(p => p.GeneroId == generoId);
             }
 
+            // Filtro por plataforma (si no es 0)
+            if (plataformaId > 0)
+            {
+                consulta = consulta.Where(p => p.PlataformaId == plataformaId);
+            }
 
-            // traer las pelicuas con su genero y plataforma usando y incluimos un paginacion con skip y take
+            /* ================================
+             * PAGINADO
+             * ================================ */
+
+            // Contamos el total de registros filtrados
+            var totalItems = await consulta.CountAsync();
+
+            // Calculamos el total de páginas
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            // Si la página es mayor al total, la ajustamos
+            if (page > totalPages)
+            {
+                page = totalPages == 0 ? 1 : totalPages;
+            }
+
+            /* ================================
+             * OBTENER PELÍCULAS
+             * ================================ */
+
+            // Traemos las películas con género y plataforma
+            // Aplicamos paginado con Skip y Take
             var peliculas = await consulta
                 .Include(p => p.Genero)
                 .Include(p => p.Plataforma)
@@ -63,10 +134,14 @@ namespace ProyectoFinal4.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            ViewBag.CurrentPage = page; // pagina actual
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize); // total de paginas 
-            ViewBag.PageSize = pageSize; // numero de items por pagina 
-            ViewBag.TxtBusqueda = txtBusqueda; // texto de busqueda actual
+            /* ================================
+             * VIEWBAGS PARA LA VISTA
+             * ================================ */
+
+            ViewBag.CurrentPage = page; // página actual
+            ViewBag.TotalPages = totalPages; // total de páginas
+            ViewBag.PageSize = pageSize; // items por página
+            ViewBag.TxtBusqueda = txtBusqueda; // texto de búsqueda actual
 
             return View(peliculas);
         }

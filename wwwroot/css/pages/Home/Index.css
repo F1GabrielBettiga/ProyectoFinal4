@@ -179,3 +179,34 @@
     border-top-left-radius: .35rem;
     border-bottom-left-radius: .35rem;
 }
+
+/* BOTÓN GLASS (limpiar filtros) */
+.btn-glass {
+    background-color: rgba(24, 33, 43, 0.6);
+    border: 1px solid var(--glass-border);
+    color: #e9ecef;
+    border-radius: 10px;
+    height: 38px; /* mismo alto visual que inputs */
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+}
+
+    .btn-glass .material-symbols-outlined {
+        font-size: 20px;
+    }
+
+    /* Hover */
+    .btn-glass:hover {
+        background-color: rgba(24, 33, 43, 0.9);
+        border-color: var(--primary-color);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    /* Focus (igual que inputs/selects) */
+    .btn-glass:focus,
+    .btn-glass:focus-visible {
+        outline: none;
+        background-color: rgba(24, 33, 43, 0.9);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(236, 182, 19, 0.25);
+    }

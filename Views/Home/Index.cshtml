@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Home Page";
     var busquedaPelicula = ViewBag.TxtBusqueda ?? "";
+    var generoId = ViewBag.GeneroId ?? 0;
+    var plataformaId = ViewBag.PlataformaId ?? 0;
 }
 
 @section Styles {
@@ -24,14 +26,11 @@
 
 
         <div class="glass-card p-4 mb-5">
-
             <div class="row g-3 align-items-end">
 
-                <!-- Search -->
+                <!-- Buscar -->
                 <div class="col-12 col-lg-5">
-
-                    <div class="input-group">
-
+                    <div class="input-group w-100">
                         <button class="input-group-text glass-input border-end-0 text-secondary" type="submit">
                             <span class="material-symbols-outlined fs-5">search</span>
                         </button>
@@ -39,38 +38,37 @@
                         <input name="txtBusqueda"
                                value="@busquedaPelicula"
                                class="form-control glass-input border-start-0 ps-0 shadow-none"
-                               placeholder="Buscar películas "
+                               placeholder="Buscar películas"
                                type="text" />
                     </div>
                 </div>
 
-                <!-- Genero -->
-                <div class="col-12 col-md-6 col-lg-2">
-
-                    <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.GeneroId">
-                        <option selected>Genero</option>
+                <!-- Género -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <select name="generoId"
+                            asp-items="ViewBag.GeneroId"
+                            onchange="this.form.submit()"
+                            class="form-select glass-input shadow-none select-glass w-100">
                     </select>
                 </div>
 
                 <!-- Plataforma -->
-                <div class="col-12 col-md-6 col-lg-2">
-                    <select class="form-select glass-input shadow-none select-glass" asp-items="ViewBag.PlataformaId">
-                        <option selected>Plataforma</option>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <select name="plataformaId"
+                            asp-items="ViewBag.PlataformaId"
+                            onchange="this.form.submit()"
+                            class="form-select glass-input shadow-none select-glass w-100">
                     </select>
                 </div>
 
-                <!-- Ordenar por -->
-                <div class="col-12 col-lg-3">
-                    <div class="input-group">
-                        <select class="form-select glass-input shadow-none select-glass">
-                            <option selected>Ordenar por</option>
-                            <option>Release Date (Newest)</option>
-                            <option>Name (A-Z)</option>
-                        </select>
-                        <span class="input-group-text glass-input border-start-0 text-secondary">
-                            <span class="material-symbols-outlined fs-5">sort</span>
-                        </span>
-                    </div>
+                <!-- Limpiar filtros -->
+                <div class="col-12 col-lg-1 d-flex justify-content-end">
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="btn btn-glass w-100 d-flex align-items-center justify-content-center"
+                       title="Limpiar filtros">
+                        <span class="material-symbols-outlined fs-5">delete_sweep</span>
+                    </a>
                 </div>
 
             </div>
@@ -121,16 +119,17 @@
 
     <!-- Paginado -->
     <div class="d-flex justify-content-center pb-4">
-        @{
-            var current = ViewBag.CurrentPage as int? ?? 1;
-            var total = ViewBag.TotalPages as int? ?? 1;
-
-            int start = Math.Max(1, current - 2);
-            int end = Math.Min(total, current + 2);
-        }
-
         <nav aria-label="Page navigation">
             <ul class="pagination pagination-sm pagination-glass mb-0">
+                @{
+                    var current = ViewBag.CurrentPage as int? ?? 1;
+                    var total = ViewBag.TotalPages as int? ?? 1;
+
+                    int start = Math.Max(1, current - 2);
+                    int end = Math.Min(total, current + 2);
+
+
+                }
 
                 <!-- Anterior (icono) -->
                 <li class="page-item @(current <= 1 ? "disabled" : "")">
@@ -139,6 +138,8 @@
                        asp-action="Index"
                        asp-route-page="@(current - 1)"
                        asp-route-txtBusqueda="@busquedaPelicula"
+                       asp-route-generoId="@generoId"
+                       asp-route-plataformaId="@plataformaId"
                        aria-label="Anterior">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </a>
@@ -152,7 +153,9 @@
                            asp-controller="Home"
                            asp-action="Index"
                            asp-route-page="1"
-                           asp-route-txtBusqueda="@busquedaPelicula">1</a>
+                           asp-route-txtBusqueda="@busquedaPelicula"
+                           asp-route-generoId="@generoId"
+                           asp-route-plataformaId="@plataformaId">1</a>
                     </li>
 
                     @if (start > 2)
@@ -171,7 +174,9 @@
                            asp-controller="Home"
                            asp-action="Index"
                            asp-route-page="@i"
-                           asp-route-txtBusqueda="@busquedaPelicula">@i</a>
+                           asp-route-txtBusqueda="@busquedaPelicula"
+                           asp-route-generoId="@generoId"
+                           asp-route-plataformaId="@plataformaId">@i</a>
                     </li>
                 }
 
@@ -190,7 +195,9 @@
                            asp-controller="Home"
                            asp-action="Index"
                            asp-route-page="@total"
-                           asp-route-txtBusqueda="@busquedaPelicula">@total</a>
+                           asp-route-txtBusqueda="@busquedaPelicula"
+                           asp-route-generoId="@generoId"
+                           asp-route-plataformaId="@plataformaId">@total</a>
                     </li>
                 }
 
@@ -201,6 +208,8 @@
                        asp-action="Index"
                        asp-route-page="@(current + 1)"
                        asp-route-txtBusqueda="@busquedaPelicula"
+                       asp-route-generoId="@generoId"
+                       asp-route-plataformaId="@plataformaId"
                        aria-label="Siguiente">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </a>
@@ -208,6 +217,7 @@
 
             </ul>
         </nav>
+
     </div>
 
 </main>
