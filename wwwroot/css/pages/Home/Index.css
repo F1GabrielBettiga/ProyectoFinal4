@@ -1,8 +1,6 @@
 ﻿/* HOME CSS (sin navbar) */
 
 :root {
-    --bs-body-bg: #0b1118;
-    --bs-body-color: #e9ecef;
     --primary-color: #ecb613;
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -35,16 +33,25 @@
         box-shadow: 0 0 0 0.25rem rgba(236, 182, 19, 0.25);
     }
 
-/* Fix: select “se ve negro” (texto y opciones) */
-.select-black,
-.select-black option {
-    color: #000 !important;
+/* ✅ Select estilo glass + texto legible */
+.select-glass {
+    background-color: rgba(24, 33, 43, 0.6) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: #e9ecef !important;
 }
 
-/* (Opcional) para que el select siga oscuro cuando NO está desplegado */
-.select-black {
-    background-color: rgba(24, 33, 43, 0.6) !important;
-}
+    .select-glass:focus {
+        background-color: rgba(24, 33, 43, 0.9) !important;
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 0.25rem rgba(236, 182, 19, 0.25) !important;
+        color: #fff !important;
+    }
+
+    /* Importante: las opciones del desplegable (depende del navegador) */
+    .select-glass option {
+        background: #0b1118;
+        color: #e9ecef;
+    }
 
 /* Movie card */
 .movie-card {
@@ -76,21 +83,6 @@
         transition: transform 0.5s ease;
     }
 
-/* Badge top-right */
-.rating-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 4px 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
 /* Hover lift */
 .hover-lift {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -114,20 +106,6 @@
     color: var(--primary-color) !important;
 }
 
-/* Glass button */
-.btn-glass {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: white;
-    transition: all 0.3s;
-}
-
-    .btn-glass:hover {
-        background: rgba(255,255,255,0.1);
-        border-color: var(--primary-color);
-        color: white;
-    }
-
 /* Material Symbols star filled */
 .star-fill {
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -136,4 +114,68 @@
 /* Tiny duration */
 .duration-text {
     font-size: 0.75rem;
+}
+
+/* PAGINADO GLASS (HOME) */
+.pagination-glass {
+    gap: .35rem;
+}
+
+    .pagination-glass .page-link {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        color: #e9ecef;
+        border-radius: .65rem;
+        padding: .40rem .65rem;
+        transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        box-shadow: none;
+    }
+
+        .pagination-glass .page-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(236, 182, 19, 0.45);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+    .pagination-glass .page-item.active .page-link {
+        background: rgba(236, 182, 19, 0.16);
+        border-color: rgba(236, 182, 19, 0.65);
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .pagination-glass .page-item.disabled .page-link {
+        opacity: .45;
+        pointer-events: none;
+    }
+
+    .pagination-glass .material-symbols-outlined {
+        font-size: 20px;
+        line-height: 1;
+        vertical-align: middle;
+    }
+
+/* "..." */
+.page-link-dots {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: #adb5bd !important;
+    padding-left: .35rem;
+    padding-right: .35rem;
+}
+
+/* redondeo “hacia afuera” en las flechas */
+.pagination-glass .page-item:first-child .page-link {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: .35rem;
+    border-bottom-right-radius: .35rem;
+}
+
+.pagination-glass .page-item:last-child .page-link {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    border-top-left-radius: .35rem;
+    border-bottom-left-radius: .35rem;
 }

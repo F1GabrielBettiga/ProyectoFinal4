@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal4.Data;
 using ProyectoFinal4.Models;
+using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ProyectoFinal4.Controllers
 {
@@ -17,17 +19,42 @@ namespace ProyectoFinal4.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+            const int pageSize = 10; //numero de items por pagina
 
             ViewBag.GeneroId = new SelectList(_context.Generos, "Id", "Descripcion");
             ViewBag.PlataformaId = new SelectList(_context.Plataformas, "Id", "Nombre");
 
-            //traer las pelicuas con su genero y plataforma
+            //aca vamos a chequear si pagina es menor a 1 por si alguien pone un numero negativo
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+
+            // total items
+            var totalItems = await _context.Peliculas.CountAsync(); // contar todas las peliculas
+
+            //aca vamos a chequer si la page es mayor al total de paginas y si lo es la ponemos en la ultima pagina
+            if (page > totalItems / pageSize + 1)
+            {
+                page = (totalItems / pageSize) + 1;
+            }
+
+
+            // traer las pelicuas con su genero y plataforma usando y incluimos un paginacion con skip y take
             var peliculas = await _context.Peliculas
                 .Include(p => p.Genero)
                 .Include(p => p.Plataforma)
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
+
+            ViewBag.CurrentPage = page; // pagina actual
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize); // total de paginas 
+            ViewBag.PageSize = pageSize; // numero de items por pagina 
 
             return View(peliculas);
         }
