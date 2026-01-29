@@ -1,0 +1,233 @@
+﻿/* ================================
+   ADMIN SKIN (Filtros / Tabla / Paginado) - GÉNERO
+   ================================ */
+.genero-index {
+    --admin-accent: #38bdf8;
+    --admin-accent-2: #a78bfa;
+    --admin-panel: rgba(17, 24, 39, .72);
+    --admin-panel-2: rgba(30, 41, 59, .72);
+    --admin-stroke: rgba(255,255,255,.10);
+    --admin-stroke-2: rgba(255,255,255,.16);
+    --admin-glow: 0 0 0 .25rem rgba(56,189,248,.18);
+}
+
+    /* =================================================
+   SECCIÓN: CONTENEDOR DE FILTROS (banda con fondo) - GÉNERO
+   ================================================= */
+    .genero-index .admin-filters {
+        background: linear-gradient(135deg, var(--admin-panel), var(--admin-panel-2));
+        border: 1px solid var(--admin-stroke);
+        border-radius: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+
+        /* “lucecita” sutil de fondo en la banda de filtros */
+        .genero-index .admin-filters::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at 20% 30%, rgba(56,189,248,.18), transparent 45%), radial-gradient(circle at 70% 60%, rgba(167,139,250,.14), transparent 50%);
+            filter: blur(18px);
+            pointer-events: none;
+        }
+
+    /* =================================================
+   SECCIÓN: INPUTS (estilo glass + hover) - GÉNERO
+   ================================================= */
+    .genero-index .glass-input {
+        background: rgba(255,255,255,.05) !important;
+        border: 1px solid var(--admin-stroke) !important;
+        color: #fff !important;
+        border-radius: .9rem !important;
+        transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+        .genero-index .glass-input:hover {
+            background: rgba(255,255,255,.07) !important;
+            border-color: rgba(56,189,248,.35) !important;
+            box-shadow: 0 10px 24px rgba(0,0,0,.22);
+            transform: translateY(-1px);
+        }
+
+        .genero-index .glass-input:focus {
+            border-color: var(--admin-accent) !important;
+            box-shadow: var(--admin-glow) !important;
+        }
+
+    /* =================================================
+   SECCIÓN: BOTÓN LUPA (search) dentro del input-group - GÉNERO
+   ================================================= */
+    .genero-index .input-group-text.glass-input {
+        cursor: pointer;
+        color: #cbd5e1 !important;
+    }
+
+        .genero-index .input-group-text.glass-input:hover {
+            color: #fff !important;
+            border-color: rgba(56,189,248,.35) !important;
+        }
+
+    /* =================================================
+   SECCIÓN: BOTÓN TACHO (limpiar filtros) - GÉNERO
+   ================================================= */
+    .genero-index .btn-glass {
+        border: 1px solid var(--admin-stroke);
+        background: rgba(255,255,255,.06);
+        border-radius: .9rem;
+        transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+        min-height: 42px;
+    }
+
+        .genero-index .btn-glass:hover {
+            background: rgba(56,189,248,.10);
+            border-color: rgba(56,189,248,.45);
+            box-shadow: 0 14px 26px rgba(0,0,0,.28);
+            transform: translateY(-1px);
+        }
+
+        .genero-index .btn-glass:active {
+            transform: translateY(0px) scale(.98);
+        }
+
+    /* =================================================
+   SECCIÓN: BUSCAR INTEGRADO (lupa + input unidos) - GÉNERO
+   ================================================= */
+    .genero-index .input-group {
+        border-radius: .9rem;
+        overflow: hidden;
+    }
+
+    .genero-index .input-group-text.glass-input {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: .9rem !important;
+        border-bottom-left-radius: .9rem !important;
+    }
+
+        .genero-index .input-group-text.glass-input span {
+            color: #94a3b8;
+        }
+
+    .genero-index .form-control.glass-input {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: .9rem !important;
+        border-bottom-right-radius: .9rem !important;
+    }
+
+    .genero-index .input-group:hover {
+        box-shadow: 0 0 0 1px rgba(56,189,248,.35);
+    }
+
+    /* =================================================
+   SECCIÓN: TABLA (fondo distinto al fondo general) - GÉNERO
+   ================================================= */
+    .genero-index .card.glass-effect {
+        background: rgba(15, 23, 42, .72);
+        border: 1px solid rgba(255,255,255,.08);
+        box-shadow: 0 16px 40px rgba(0,0,0,.40);
+    }
+
+    /* Damos “cuerpo” a la tabla */
+    .genero-index .table-custom {
+        --bs-table-bg: rgba(15, 23, 42, .72);
+        --bs-table-border-color: rgba(255,255,255,.06);
+    }
+
+        .genero-index .table-custom thead th {
+            background: rgba(255,255,255,.03);
+            border-bottom: 1px solid rgba(255,255,255,.08) !important;
+        }
+
+        /* Hover filas */
+        .genero-index .table-custom tbody tr {
+            transition: background .18s ease, transform .18s ease;
+        }
+
+            .genero-index .table-custom tbody tr:hover {
+                background: rgba(56,189,248,.06) !important;
+            }
+
+    /* Botones icono (los usás en acciones) */
+    .genero-index .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.375rem;
+    }
+
+/* =================================================
+   SECCIÓN: PAGINADO (glass) - color admin - GÉNERO
+   ================================================= */
+.pagination-glass {
+    gap: .35rem;
+}
+
+    .pagination-glass .page-link {
+        background: rgba(13, 110, 253, 0.08);
+        border: 1px solid rgba(13, 110, 253, 0.25);
+        color: #e9ecef;
+        border-radius: .65rem;
+        padding: .40rem .65rem;
+        transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        box-shadow: none;
+    }
+
+        .pagination-glass .page-link:hover {
+            background: rgba(13, 110, 253, 0.18);
+            border-color: rgba(13, 110, 253, 0.65);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+    .pagination-glass .page-item.active .page-link {
+        background: rgba(13, 110, 253, 0.30);
+        border-color: rgba(13, 110, 253, 0.85);
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .pagination-glass .page-item.disabled .page-link {
+        opacity: .45;
+        pointer-events: none;
+    }
+
+    .pagination-glass .material-symbols-outlined {
+        font-size: 20px;
+        line-height: 1;
+        vertical-align: middle;
+    }
+
+/* "..." */
+.page-link-dots {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: #adb5bd !important;
+    padding-left: .35rem;
+    padding-right: .35rem;
+}
+
+/* Redondeo “hacia afuera” en flechas */
+.pagination-glass .page-item:first-child .page-link {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: .35rem;
+    border-bottom-right-radius: .35rem;
+}
+
+.pagination-glass .page-item:last-child .page-link {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    border-top-left-radius: .35rem;
+    border-bottom-left-radius: .35rem;
+}
+
+/* =================================================
+   SECCIÓN: FOOTER DEL PAGINADO (borde arriba) - GÉNERO
+   ================================================= */
+.genero-index .pagination-footer {
+    background: rgba(15, 23, 42, .72);
+    border-top: 1px solid rgba(255,255,255,.06);
+}
