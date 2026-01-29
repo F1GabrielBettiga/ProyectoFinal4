@@ -1,60 +1,167 @@
 ﻿@model ProyectoFinal4.Models.Pelicula
 
 @{
-    ViewData["Title"] = "Details";
+  
+    ViewData["Title"] = $"Detalles - {Model.Titulo}";
 }
 
-<h1>Details</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Pelicula/details.css" asp-append-version="true" />
+}
 
-<div>
-    <h4>Pelicula</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaLanzamiento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaLanzamiento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MinutosDuracion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MinutosDuracion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sinopsis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sinopsis)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PosterUrlPortada)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PosterUrlPortada)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genero)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genero.Descripcion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plataforma)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plataforma.Nombre)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<main class="container py-5">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Gestión de Películas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Titulo</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+
+        <!-- Poster -->
+        <div class="col-lg-4">
+            <div class="poster-container position-sticky" style="top: 100px;">
+                <img src=@Model.PosterUrlPortada
+                     class="img-fluid w-100"
+                     alt="Interstellar Poster">
+            </div>
+        </div>
+
+        <!-- Detalle -->
+        <div class="col-lg-8">
+            <div class="glass-card">
+
+                <!-- Header -->
+                <div class="mb-4">
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+                        <span class="genre-badge">@Model.Genero.Descripcion</span>
+
+                        <div class="text-muted small fw-semibold d-flex align-items-center gap-1">
+                            <span class="material-symbols-outlined fs-6">schedule</span> 
+                            @if (@Model.MinutosDuracion >= 60)
+                            {
+                                @(@Model.MinutosDuracion / 60)
+
+                                @:h
+                            }
+                            @(@Model.MinutosDuracion % 60)m
+                        </div>
+
+                        <div class="text-muted small fw-semibold d-flex align-items-center gap-1">
+                            <span class="material-symbols-outlined fs-6">calendar_month</span> @Model.FechaLanzamiento.Year
+                        </div>
+                    </div>
+
+                    <h1 class="display-4 movie-title text-white mb-3">@Model.Titulo</h1>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rating-stars">
+                            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0">star</span>
+                            <span class="ms-2 fw-bold text-white fs-5">8.6</span>
+                        </div>
+
+                       
+                    </div>
+                </div>
+
+                <!-- Sinopsis -->
+                <div class="mb-5">
+                    <h3 class="section-title">
+                        <span class="material-symbols-outlined">description</span>
+                        Sinopsis
+                    </h3>
+
+                    <p class="text-muted" style="font-size: 1.05rem; line-height: 1.6;">
+                        @Model.Sinopsis
+                    </p>
+                </div>
+
+                <!-- Plataforma -->
+                <div class="mb-5">
+                    <h3 class="section-title">
+                        <span class="material-symbols-outlined">smart_display</span>
+                        Disponible en
+                    </h3>
+
+                    <a href="@Model.Plataforma.Url" class="platform-card">
+                        <div class="platform-logo-box">
+                            <img src="@Model.Plataforma.LogoUrl"
+                                 class="platform-logo-img"
+                                 alt="Logo @Model.Plataforma.Nombre" />
+                        </div>
+
+                        <div>
+                            <div class="fw-bold d-flex align-items-center gap-1">
+                                @Model.Plataforma.Nombre
+                                <span class="material-symbols-outlined fs-6">open_in_new</span>
+                            </div>
+                            
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Reseñas -->
+                <div class="mb-5">
+                    <h3 class="section-title">
+                        <span class="material-symbols-outlined">rate_review</span>
+                        Reseñas 
+                    </h3>
+
+                    <!-- Reseña 1 -->
+                    <div class="review-card">
+                        <div class="d-flex gap-3 align-items-start">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVTUYFoUvhfoQ4KSwDpdrNYFgKuwUOQML2VE11XJ6ShFei-L7UZL3BNq-xZMZt3Z7gk8Qvi3nKn0QaGEOfbRm3AtSTeS8MiaV2n5Ah7kcEPV_30GBwz01dHDFPIXd-mYkMtDsTLJ7c4ettdt5H80clY1ozGPQ7fU3XX2xmE7YK3eHEuLvxgH9782-sYLqZ4NSfvSbjulfIoYRBp3-YWaVswjylpOW-YkmgchaY2d7MGlJLZNRJeOv8ILfTDlbivRtC39UC9FV2my_l"
+                                 class="user-avatar"
+                                 alt="Elena R.">
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <h5 class="mb-0 fs-6 fw-bold">Elena R.</h5>
+                                    <div class="rating-stars">
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-muted small mb-0">
+                                    Absolutamente impresionante. La banda sonora de Hans Zimmer es de otro mundo.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-outlined">edit</span>
+                            Editar Película
+                        </a>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Volver
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

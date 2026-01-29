@@ -1,0 +1,230 @@
+﻿/* =================================================
+   VARIABLES GENERALES
+   ================================================= */
+:root {
+    --primary-color: #0d6efd;
+    --bg-dark: #0f172a;
+    --surface-dark: #1e293b;
+    --text-muted: #94a3b8;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* =================================================
+   BASE
+   ================================================= */
+body {
+    background-color: var(--bg-dark);
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+/* =================================================
+   BREADCRUMB
+   ================================================= */
+.breadcrumb {
+    background: transparent;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "\e5cc";
+    font-family: 'Material Symbols Outlined';
+    font-size: 16px;
+    color: var(--text-muted);
+}
+
+.breadcrumb-item a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+    .breadcrumb-item a:hover {
+        color: #fff;
+    }
+
+.breadcrumb-item.active {
+    color: #fff;
+}
+
+/* =================================================
+   POSTER
+   ================================================= */
+.poster-container {
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #fff;
+    padding: 1.25rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,.45);
+}
+
+    .poster-container img {
+        border-radius: .5rem;
+    }
+
+/* =================================================
+   GLASS CARD PRINCIPAL
+   ================================================= */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.25rem;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,.35);
+}
+
+/* =================================================
+   HEADER INFO
+   ================================================= */
+.genre-badge {
+    background: rgba(13,110,253,.15);
+    color: #3b82f6;
+    border: 1px solid rgba(13,110,253,.25);
+    font-size: .75rem;
+    font-weight: 700;
+    padding: .35rem 1rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.movie-title {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* =================================================
+   RATING
+   ================================================= */
+.rating-stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: #f59e0b;
+}
+
+    .rating-stars .material-symbols-outlined {
+        font-size: 20px;
+    }
+
+/* =================================================
+   SECCIONES
+   ================================================= */
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+    .section-title .material-symbols-outlined {
+        color: var(--primary-color);
+    }
+
+/* =================================================
+   PLATAFORMA
+   ================================================= */
+.platform-card {
+    background: rgba(0,0,0,.25);
+    border: 1px solid var(--glass-border);
+    border-radius: .75rem;
+    padding: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all .2s ease;
+}
+
+    .platform-card:hover {
+        background: rgba(13,110,253,.08);
+        border-color: rgba(13,110,253,.5);
+        color: #fff;
+    }
+
+/* Logo dentro del card de plataforma */
+.platform-logo-box {
+    width: 44px;
+    height: 44px;
+    background: #000;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* CLAVE: evita que el logo se desborde */
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.platform-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* para que entre sin deformarse */
+    display: block;
+}
+
+/* =================================================
+   RESEÑAS
+   ================================================= */
+.review-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--glass-border);
+    border-radius: .75rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+    .review-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0,0,0,.35);
+    }
+
+/* Avatar de usuario */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--glass-border);
+}
+
+/* Rating chico en reseñas */
+.review-card .rating-stars .material-symbols-outlined {
+    font-size: 16px;
+}
+
+/* =================================================
+   BOTONES
+   ================================================= */
+.btn-primary {
+    padding: .75rem 1.5rem;
+    font-weight: 600;
+    border-radius: .75rem;
+    box-shadow: 0 4px 14px rgba(13,110,253,.4);
+}
+
+.btn-outline-secondary {
+    padding: .75rem 1.5rem;
+    font-weight: 500;
+    border-radius: .75rem;
+    border-color: var(--glass-border);
+    color: var(--text-muted);
+}
+
+    .btn-outline-secondary:hover {
+        background: rgba(255,255,255,.06);
+        border-color: #fff;
+        color: #fff;
+    }
+
+/* =================================================
+   ICONOS
+   ================================================= */
+.material-symbols-outlined {
+    vertical-align: middle;
+}
