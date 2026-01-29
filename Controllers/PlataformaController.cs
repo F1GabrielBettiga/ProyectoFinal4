@@ -20,9 +20,72 @@ namespace ProyectoFinal4.Controllers
         }
 
         // GET: Plataforma
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, string txtBusqueda = "")
         {
-            return View(await _context.Plataformas.ToListAsync());
+            const int pageSize = 3; // número de items por página
+
+            /* ================================
+             * VALIDACIONES DE PAGINADO
+             * ================================ */
+
+            // Chequeamos que la página no sea menor a 1
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            /* ================================
+             * ARMADO DE LA CONSULTA
+             * ================================ */
+
+            // Creamos una consulta base (todavía no se ejecuta)
+            var consulta = _context.Plataformas.AsQueryable();
+
+            // Filtro por título (búsqueda)
+            if (!string.IsNullOrEmpty(txtBusqueda))
+            {
+                consulta = consulta.Where(p => p.Nombre.Contains(txtBusqueda));
+            }
+
+
+            /* ================================
+             * PAGINADO
+             * ================================ */
+
+            // Contamos el total de registros filtrados
+            var totalItems = await consulta.CountAsync();
+
+            // Calculamos el total de páginas
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            // Si la página es mayor al total, la ajustamos
+            if (page > totalPages)
+            {
+                page = totalPages == 0 ? 1 : totalPages;
+            }
+
+            /* ================================
+             * OBTENER PELÍCULAS
+             * ================================ */
+
+            // Traemos las películas con género y plataforma
+            // Aplicamos paginado con Skip y Take
+            var generos = await consulta
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            /* ================================
+             * VIEWBAGS PARA LA VISTA
+             * ================================ */
+
+            ViewBag.CurrentPage = page; // página actual
+            ViewBag.TotalPages = totalPages; // total de páginas
+            ViewBag.PageSize = pageSize; // items por página
+            ViewBag.TxtBusqueda = txtBusqueda; // texto de búsqueda actual
+
+            return View(generos);
         }
 
         // GET: Plataforma/Details/5
