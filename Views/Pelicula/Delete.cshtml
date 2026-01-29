@@ -1,63 +1,78 @@
 ﻿@model ProyectoFinal4.Models.Pelicula
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar Pelicula";
 }
 
-<h1>Delete</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Pelicula/Delete.css" asp-append-version="true" />
+}
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Pelicula</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaLanzamiento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaLanzamiento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MinutosDuracion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MinutosDuracion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sinopsis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sinopsis)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PosterUrlPortada)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PosterUrlPortada)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genero)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genero.Descripcion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plataforma)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plataforma.Nombre)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+<main class="delete-page container-fluid p-4 d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 120px);">
+
+    <div class="delete-wrapper w-100">
+
+        <div class="card glass-card mx-auto" style="max-width: 480px;">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <div class="warning-badge mx-auto mb-3">
+                        <span class="material-symbols-outlined text-danger">warning</span>
+                    </div>
+
+                    <h3 class="fw-bold mb-2">Eliminar Película</h3>
+
+                    <p class="text-secondary-custom small px-3 mb-0">
+                        Esta acción no se puede deshacer. ¿Estás seguro de que deseas eliminar
+                        permanentemente la película <strong>@Model.Titulo</strong>?
+                    </p>
+                </div>
+
+                <!-- Resumen Película -->
+                <div class="movie-summary p-3 mb-4 d-flex align-items-start gap-3">
+                    <div class="poster-thumb">
+                        <img src="@Model.PosterUrlPortada" alt="Poster @Model.Titulo" />
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1">@Model.Titulo</h5>
+
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-dark border border-secondary border-opacity-25 fw-normal">
+                                @Model.FechaLanzamiento.Year
+                            </span>
+                            <span class="text-secondary-custom small">•</span>
+                            <span class="text-secondary-custom small">@Model.Genero.Descripcion • @Model.Plataforma.Nombre </span>
+                        </div>
+
+                        <div class="text-secondary-custom" style="font-size:.75rem;">
+                            ID: @Model.Id
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="d-flex gap-3">
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary flex-fill py-2">
+                            Cancelar
+                        </a>
+
+                        <button type="submit"
+                                class="btn btn-danger flex-fill py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-outlined">delete</span>
+                            Eliminar
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</main>
