@@ -1,64 +1,142 @@
 ﻿@model ProyectoFinal4.Models.Pelicula
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = $"Editar - {Model.Titulo}";
+}
 }
 
-<h1>Edit</h1>
 
-<h4>Pelicula</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Titulo" class="control-label"></label>
-                <input asp-for="Titulo" class="form-control" />
-                <span asp-validation-for="Titulo" class="text-danger"></span>
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Pelicula/Edit.css" asp-append-version="true" />
+}
+
+
+<div class="pelicula-create container-fluid px-4 py-4" style="max-width: 1024px;">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a asp-controller="Pelicula" asp-action="Index"
+                   class="text-decoration-none text-secondary d-inline-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined fs-6">home</span>
+                    Gestión de Películas
+                </a>
+            </li>
+            <li class="breadcrumb-item active text-white" aria-current="page">
+                Editar Película
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-3">
+        <span class="material-symbols-outlined text-primary fs-2">edit_note</span>
+        <h1 class="display-6 fw-bold m-0">Editar Pelicula - @Model.Titulo</h1>
+    </div>
+
+    <!-- Card -->
+    <div class="glass-panel rounded-4 p-4 p-md-5">
+
+        <form asp-action="Edit" method="post">
+
+            <div class="row g-4">
+
+                <!-- Col izquierda -->
+                <div class="col-12 col-lg-8">
+
+                    <!-- Título -->
+                    <div class="floating-field mb-4">
+
+                        <input asp-for="Titulo" class="floating-input" placeholder=" " />
+                        <label asp-for="Titulo" class="floating-label"></label>
+                        <span asp-validation-for="Titulo" class="text-danger"></span>
+
+
+
+                    </div>
+
+                    <!-- Sinopsis -->
+                    <div class="floating-field mb-4">
+                        <textarea asp-for="Sinopsis" class="floating-input" rows="6" placeholder=" "></textarea>
+                        <label asp-for="Sinopsis" class="floating-label"></label>
+                        <span asp-validation-for="Sinopsis" class="text-danger"></span>
+                    </div>
+
+                    <div class="row g-4">
+
+                        <!-- Fecha -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="FechaLanzamiento" class="form-label text-secondary mb-2"></label>
+                                <input asp-for="FechaLanzamiento" type="date" class="floating-input" />
+                                <span asp-validation-for="FechaLanzamiento" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Duración -->
+                        <div class="col-12 col-md-6">
+                            <div class="floating-field">
+                                <label asp-for="MinutosDuracion" class="form-label text-secondary mb-2"></label>
+                                <input asp-for="MinutosDuracion" type="number" class="floating-input" placeholder=" " />
+                                <span asp-validation-for="MinutosDuracion" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Col derecha -->
+                <div class="col-12 col-lg-4">
+
+
+                    <!-- Preview -->
+                    <div class="poster-preview mb-3">
+                        <img src="@Model.PosterUrlPortada"
+                             alt="Poster Preview"
+                             class="poster-img" />
+                    </div>
+
+                    <!-- Poster URL -->
+                    <div class="floating-field mb-3">
+                        <input asp-for="PosterUrlPortada" class="floating-input" type="url" />
+                        <label asp-for="PosterUrlPortada" class="floating-label">URL del póster</label>
+                        <span asp-validation-for="PosterUrlPortada" class="text-danger"></span>
+                    </div>
+
+                    <!-- Género -->
+                    <div class="floating-field mb-3 position-relative">
+                        <select asp-for="GeneroId" class="floating-input" asp-items="ViewBag.GeneroId"> </select>
+                        <label asp-for="GeneroId" class="floating-label">Género</label>
+                        <span class="select-caret material-symbols-outlined">expand_more</span>
+                    </div>
+
+                    <!-- Plataforma -->
+                    <div class="floating-field mb-3 position-relative">
+                        <select asp-for="PlataformaId" class="floating-input" asp-items="ViewBag.PlataformaId"> </select>
+                        <label asp-for="PlataformaId" class="floating-label">Plataforma</label>
+                        <span class="select-caret material-symbols-outlined">expand_more</span>
+                    </div>
+
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="FechaLanzamiento" class="control-label"></label>
-                <input asp-for="FechaLanzamiento" class="form-control" />
-                <span asp-validation-for="FechaLanzamiento" class="text-danger"></span>
+
+            <!-- Botones -->
+            <div class="form-actions mt-4 pt-4">
+
+                <a asp-action="Index" class="btn-cancel">Cancelar</a>
+
+
+                <button type="submit" class="btn-primary">
+                    <span class="material-symbols-outlined">save</span>
+                    Editar Película
+                </button>
+
             </div>
-            <div class="form-group">
-                <label asp-for="MinutosDuracion" class="control-label"></label>
-                <input asp-for="MinutosDuracion" class="form-control" />
-                <span asp-validation-for="MinutosDuracion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Sinopsis" class="control-label"></label>
-                <input asp-for="Sinopsis" class="form-control" />
-                <span asp-validation-for="Sinopsis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PosterUrlPortada" class="control-label"></label>
-                <input asp-for="PosterUrlPortada" class="form-control" />
-                <span asp-validation-for="PosterUrlPortada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GeneroId" class="control-label"></label>
-                <select asp-for="GeneroId" class="form-control" asp-items="ViewBag.GeneroId"></select>
-                <span asp-validation-for="GeneroId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlataformaId" class="control-label"></label>
-                <select asp-for="PlataformaId" class="form-control" asp-items="ViewBag.PlataformaId"></select>
-                <span asp-validation-for="PlataformaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
         </form>
+
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

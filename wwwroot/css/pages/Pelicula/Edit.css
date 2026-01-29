@@ -1,0 +1,164 @@
+﻿.pelicula-create {
+    color: #fff;
+}
+
+/* Glass */
+.glass-panel {
+    background: rgba(28, 33, 39, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 30px rgba(0,0,0,.15);
+}
+
+/* Floating wrappers */
+.floating-field {
+    position: relative;
+}
+
+/* Inputs */
+.floating-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 1.35rem 0.95rem 0.65rem;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+    .floating-input:focus {
+        outline: none;
+        border-color: #1173d4;
+        box-shadow: 0 0 0 .25rem rgba(17,115,212,.20);
+        background: rgba(255,255,255,0.07);
+    }
+
+    .floating-input::placeholder {
+        color: transparent;
+    }
+
+/* Labels */
+.floating-label {
+    position: absolute;
+    left: 0.95rem;
+    top: 0.95rem;
+    color: #9dabb9;
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: all .12s ease;
+    transform-origin: left top;
+}
+
+/* Sube label cuando hay contenido o focus */
+.floating-input:focus + .floating-label,
+.floating-input:not(:placeholder-shown) + .floating-label,
+select.floating-input:valid + .floating-label {
+    transform: translateY(-0.55rem) scale(0.85);
+    color: #1173d4;
+}
+
+/* Textarea altura */
+textarea.floating-input {
+    resize: vertical;
+    min-height: 160px;
+}
+
+/* Select */
+select.floating-input {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.6rem;
+}
+
+/* Flechita del select */
+.select-caret {
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-10%);
+    color: #9dabb9;
+    pointer-events: none;
+}
+
+/* Poster preview */
+.poster-preview {
+    aspect-ratio: 2 / 3;
+    border-radius: 12px;
+    border: 1px dashed rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #9dabb9;
+    text-align: center;
+    padding: 1rem;
+}
+
+.poster-icon {
+    font-size: 2.5rem;
+    margin-bottom: .4rem;
+}
+
+/* Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Cancel */
+.btn-cancel {
+    padding: .8rem 1.25rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #cbd5e1;
+    text-decoration: none;
+    background: transparent;
+    transition: .15s ease;
+}
+
+    .btn-cancel:hover {
+        background: rgba(255,255,255,0.06);
+        color: #fff;
+    }
+
+/* Primary */
+.btn-primary {
+    padding: .8rem 1.25rem;
+    border-radius: 12px;
+    border: none;
+    background: #1173d4;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    transition: .15s ease;
+}
+
+    .btn-primary:hover {
+        background: #0e5ea8;
+    }
+
+/* dropdown nativo del select en dark mode */
+.floating-input option {
+    background-color: #1c2127; /* fondo oscuro */
+    color: #ffffff;
+}
+
+
+.floating-input optgroup {
+    background-color: #1c2127;
+    color: #9dabb9;
+}
+/* Imagen dentro del preview */
+.poster-preview .poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* mantiene proporción y entra en el cuadro */
+    object-position: center; /* centrada */
+    border-radius: 10px;
+    display: block;
+}
