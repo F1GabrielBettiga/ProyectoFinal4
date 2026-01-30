@@ -1,5 +1,5 @@
 ﻿/* =================================================
-   VARIABLES GENERALES (solo para esta pantalla)
+   VARIABLES GENERALES
    ================================================= */
 :root {
     /* Fondo de la pantalla */
@@ -35,7 +35,7 @@
 
 
 /* =================================================
-   CARD PRINCIPAL (glass + tono rojizo)
+   CARD PRINCIPAL (glass + tono rojo)
    ================================================= */
 .glass-card {
     background: var(--card-delete-bg);
@@ -57,7 +57,7 @@
 
 /* =================================================
    BADGE DE ADVERTENCIA
-   Círculo perfecto + halo suave
+   Círculo + halo suave
    ================================================= */
 .warning-badge {
     width: 72px;
