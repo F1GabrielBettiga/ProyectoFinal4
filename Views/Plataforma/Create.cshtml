@@ -1,43 +1,96 @@
 ﻿@model ProyectoFinal4.Models.Plataforma
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Plataforma";
 }
 
-<h1>Create</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Plataforma/create.css" asp-append-version="true" />
+}
 
-<h4>Plataforma</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+<div class="container-fluid d-flex flex-column min-vh-100 align-items-center p-3 pt-5">
+
+    <div class="w-100" style="max-width: 900px;">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Plataforma" asp-action="Index"
+                       class="text-decoration-none text-secondary d-inline-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined fs-6">home</span>
+                        Gestión de Plataformas
+                    </a>
+                </li>
+                <li class="breadcrumb-item active text-white" aria-current="page">
+                    Crear Plataforma
+                </li>
+            </ol>
+        </nav>
+
+        <div class="glass-panel p-4 p-md-5 rounded-4 shadow">
+
+            <div class="d-flex align-items-center gap-3 mb-4 pb-2">
+                <div class="icon-box flex-shrink-0">
+                    <span class="material-symbols-outlined fs-3">add_circle</span>
+                   
+                </div>
+
+                <div>
+                    <h1 class="h4 fw-bold mb-1 text-white">Crear Plataforma</h1>
+                    <p class="mb-0 text-secondary small"> Complete la información para registrar una nueva plataforma.</p>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LogoUrl" class="control-label"></label>
-                <input asp-for="LogoUrl" class="form-control" />
-                <span asp-validation-for="LogoUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <form asp-action="Create" method="post">
+                <div class="row g-4">
+
+                    <div class="col-lg-8">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Nombre" class="form-control" />
+                            <label asp-for="Nombre"></label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Url" class="form-control"  />
+                            <label asp-for="Url"></label>
+                        </div>
+
+                        <div class="form-floating mb-1">
+                            <input asp-for="LogoUrl" class="form-control" />
+                            <label asp-for="LogoUrl"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="d-flex flex-column align-items-center align-items-lg-start h-100">
+                            <span class="text-uppercase fw-semibold text-secondary small mb-2 d-block w-100 text-center text-lg-start"
+                                  style="font-size: 0.75rem; letter-spacing: 1px;">
+                                Vista Previa
+                            </span>
+
+                            <div class="preview-container rounded-4 w-100 shadow-sm mb-3">
+                                <div class="preview-bg-grid"></div>
+
+                                <img alt="Platform Logo Preview"
+                                     id="logoPreview"
+                                     src="" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-4 border-top border-secondary-subtle">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 btn-cancel">Cancelar</a>
+
+                    <button class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2 shadow-sm" type="submit">
+                        <span class="material-symbols-outlined fs-5">save</span>
+                        Crear Plataforma
+                    </button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
