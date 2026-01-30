@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+@*
 <h1>Details</h1>
 
 <div>
@@ -33,4 +33,98 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+*@
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Plataforma/details.css" asp-append-version="true" />
+}
+
+<div class="container-fluid d-flex flex-column min-vh-100 align-items-center p-3 pt-5">
+    <div class="w-100" style="max-width: 900px;">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Plataforma" asp-action="Index"
+                       class="text-decoration-none text-secondary d-inline-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined fs-6">home</span>
+                        Gestión de Plataformas
+                    </a>
+                </li>
+                <li class="breadcrumb-item active text-white" aria-current="page">
+                    Detalle Plataforma
+                </li>
+            </ol>
+        </nav>
+
+        <div class="glass-panel p-4 p-md-5 rounded-4 shadow">
+
+            <!-- Header -->
+            <div class="d-flex align-items-center gap-3 mb-4 pb-2">
+                <div class="icon-box flex-shrink-0">
+                    <span class="material-symbols-outlined fs-3">visibility</span>
+                </div>
+
+                <div>
+                    <h1 class="h4 fw-bold mb-1 text-white">Detalle de Plataforma - @Model.Nombre</h1>
+                    
+                </div>
+            </div>
+
+            <div class="row g-5">
+                <!-- Datos -->
+                <div class="col-lg-7">
+                    <div class="mb-4 pb-2 border-bottom border-secondary-subtle">
+                        <div class="text-label mb-2">Nombre</div>
+                        <div class="fs-5 text-white fw-medium">@Model.Nombre</div>
+                    </div>
+
+                    <div class="mb-4 pb-2 border-bottom border-secondary-subtle">
+                        <div class="text-label mb-2">Sitio Web</div>
+
+
+                        <a class="link-platform d-inline-flex align-items-center gap-2 fs-5"
+                           href="@Model.Url" target="_blank" rel="noopener">
+                            @Model.Url
+                            <span class="material-symbols-outlined fs-6">open_in_new</span>
+                        </a>
+
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="text-label mb-2">Logo URL</div>
+
+                        <div class="text-secondary text-break">@Model.LogoUrl</div>
+
+                    </div>
+                </div>
+
+                <!-- Preview -->
+                <div class="col-lg-5">
+                    <span class="text-label mb-3 d-block">Vista previa del logo</span>
+
+                    <div class="preview-container rounded-4 w-100 shadow-sm">
+                        <div class="preview-bg-grid"></div>
+
+                        <img alt="Platform Logo Preview" id="logoPreview" src="@Model.LogoUrl" />
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="d-flex justify-content-end gap-2 mt-5 pt-4 border-top border-secondary-subtle">
+                <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 btn-cancel">Cancelar</a>
+
+                <a asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-primary px-4 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
+                    <span class="material-symbols-outlined fs-5">edit</span>
+                    Editar
+                </a>
+            </div>
+
+        </div>
+    </div>
 </div>

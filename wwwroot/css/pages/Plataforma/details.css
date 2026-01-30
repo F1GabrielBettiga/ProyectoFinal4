@@ -1,0 +1,122 @@
+﻿:root {
+    --bg-dark: #0b1118;
+    --surface-dark: #161b22;
+    --input-bg: rgba(28, 34, 43, 0.5);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --primary-blue: #0d6efd;
+    --primary-hover: #0b5ed7;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: #ffffff;
+    background-image: radial-gradient(circle at 15% 15%, rgba(13, 110, 253, 0.08) 0%, transparent 35%), radial-gradient(circle at 85% 85%, rgba(13, 110, 253, 0.08) 0%, transparent 35%);
+    background-attachment: fixed;
+}
+
+/* Panel glass  */
+.glass-panel {
+    background: rgba(22, 27, 34, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Icon box  */
+.icon-box {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-blue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-secondary-subtle {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Labels tipo */
+.text-label {
+    color: #9ca3af;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Link del sitio */
+.link-platform {
+    color: #6ea8fe;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    .link-platform:hover {
+        color: #9ec5fe;
+        text-decoration: underline;
+    }
+
+/* Preview*/
+.preview-container {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.preview-bg-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    background-image: radial-gradient(#4b5563 1px, transparent 1px);
+    background-size: 10px 10px;
+    z-index: 0;
+}
+
+#logoPreview {
+    position: relative;
+    z-index: 10;
+    object-fit: contain;
+    width: 70%;
+    height: 70%;
+    transition: transform 0.3s ease;
+}
+
+.preview-container:hover #logoPreview {
+    transform: scale(1.05);
+}
+
+/* Botón primary */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.4);
+    }
+
+/* BOTÓN CANCELAR*/
+.btn-cancel {
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-cancel:hover,
+    .btn-cancel:focus {
+        text-decoration: none !important;
+    }
