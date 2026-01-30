@@ -1,0 +1,150 @@
+﻿:root {
+    --bg-dark: #0b1118;
+    --surface-dark: #161b22;
+    --input-bg: rgba(28, 34, 43, 0.5);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --primary-blue: #0d6efd;
+    --primary-hover: #0b5ed7;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: #ffffff;
+    background-image: radial-gradient(circle at 15% 15%, rgba(13, 110, 253, 0.08) 0%, transparent 35%), radial-gradient(circle at 85% 85%, rgba(13, 110, 253, 0.08) 0%, transparent 35%);
+    background-attachment: fixed;
+}
+
+/* =========================
+   GLASS PANEL
+   ========================= */
+.glass-panel {
+    background: rgba(22, 27, 34, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 900px;
+}
+
+/* =========================
+   FORM FLOATING
+   ========================= */
+.form-floating > .form-control {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: #fff;
+    box-shadow: none;
+    border-radius: 0.5rem;
+}
+
+    .form-floating > .form-control:focus {
+        background-color: var(--input-bg);
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.2);
+        color: #fff;
+    }
+
+.form-floating > label {
+    color: #9ca3af;
+    padding-left: 1rem;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--primary-blue);
+    opacity: 1;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+    .form-floating > .form-control:focus ~ label::after,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label::after {
+        background-color: transparent !important;
+    }
+
+/* =========================
+   PREVIEW LOGO
+   ========================= */
+.preview-container {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.preview-bg-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    background-image: radial-gradient(#4b5563 1px, transparent 1px);
+    background-size: 10px 10px;
+    z-index: 0;
+}
+
+#logoPreview {
+    position: relative;
+    z-index: 10;
+    object-fit: contain;
+    width: 70%;
+    height: 70%;
+    transition: transform 0.3s ease;
+}
+
+.preview-container:hover #logoPreview {
+    transform: scale(1.1);
+}
+
+/* =========================
+   ICONOS
+   ========================= */
+.icon-box {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-blue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-secondary-subtle {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* =========================
+   BOTÓN PRIMARY
+   ========================= */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.4);
+    }
+
+/* =========================
+   FIX REAL BOTÓN CANCELAR 
+   ========================= */
+a.btn.btn-outline-secondary.btn-cancel,
+a.btn.btn-outline-secondary.btn-cancel:visited {
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    border-radius: 12px !important;
+}
+
+    a.btn.btn-outline-secondary.btn-cancel:hover,
+    a.btn.btn-outline-secondary.btn-cancel:focus,
+    a.btn.btn-outline-secondary.btn-cancel:active {
+        text-decoration: none !important;
+    }
