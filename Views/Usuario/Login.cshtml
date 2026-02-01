@@ -1,0 +1,115 @@
+﻿@model ProyectoFinal4.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Usuario/login.css" asp-append-version="true" />
+}
+
+<!-- Fondo -->
+<img class="bg-image"
+     alt="Dark cinema background"
+     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkRMedjlKp4o-qzUnqkCj8kfS59o9yIbUkHUDddb6yd2BoUekcPtZCQ6FE_inZ3i4H0Q3WJ7JfBi5JQhFhhEmwoEejlfna2nP3R8YBkXmOmTLVQ_fokIPIwy2qLO4ekioonw5WWoPsffJb4CyZlac8B8uR-TVPNVdyYzjcucItl-7AmMj3oLL3MGH5T1eabckYKU6ygCt0HnLxtInWjeDjrRHy3zu-71IKa7TzWO6vXY2NeDDSrQ-aah0ES8xYwOQJIrG8VzOMaMp9" />
+<div class="bg-overlay"></div>
+
+<div class="bg-shape-tl"></div>
+<div class="bg-shape-tr-1"></div>
+<div class="bg-shape-tr-2"></div>
+<div class="bg-shape-br"></div>
+<div class="bg-shape-br-inner"></div>
+
+<!-- Contenido -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+            <div class="glass-card p-4 p-md-5 w-100">
+
+                <div class="text-center mb-4">
+                    <h1 class="h2 fw-bold mb-2 text-white">Iniciar Sesión</h1>
+                    <p class="text-white-dim mb-0">¡Qué bueno verte otra vez!</p>
+                </div>
+
+                <form asp-action="Login"  method="post" class="needs-validation" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <!-- Email -->
+                    <div class="mb-4">
+                        <div class="custom-input-group">
+                            <div class="input-icon">
+                                <span class="material-symbols-outlined">mail</span>
+                            </div>
+
+                            <input asp-for="Email"
+                                   id="Email"
+                                   class="form-control"
+                                   placeholder="Correo electrónico"
+                                   type="email"
+                                   required />
+                        </div>
+
+                        <span asp-validation-for="Email" class="validation-msg"></span>
+                    </div>
+
+                    <!-- Password / Clave -->
+                    <div class="mb-4">
+                        <div class="custom-input-group">
+                            <div class="input-icon">
+                                <span class="material-symbols-outlined">lock</span>
+                            </div>
+
+                            <input asp-for="Clave"
+                                   id="Password"
+                                   class="form-control"
+                                   placeholder="Contraseña"
+                                   type="password"
+                                   required />
+
+                            <button class="toggle-password"
+                                    type="button"
+                                    onclick="toggleVisibility('Password', this)">
+                                <span class="material-symbols-outlined">visibility_off</span>
+                            </button>
+                        </div>
+
+                        <span asp-validation-for="Clave" class="validation-msg"></span>
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="d-grid mt-4">
+                        <button class="btn-gold shadow-sm w-100" type="submit">
+                            <span>Iniciar Sesión</span>
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+
+                    <!-- Link registro -->
+                    <div class="text-center mt-4">
+                        <span class="text-white-dim small">¿No tenés cuenta?</span>
+                        <a asp-action="Registro" asp-controller="Usuario" class="link-gold small ms-1">Registrate</a>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="text-center mt-5 w-100">
+                <small class="text-white-dim fw-light footer-mini">© 2026 Movie Catalog. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleVisibility(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('.material-symbols-outlined');
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.textContent = "visibility";
+        } else {
+            input.type = "password";
+            icon.textContent = "visibility_off";
+        }
+    }
+</script>

@@ -1,0 +1,281 @@
+﻿/* =====================================================
+   VARIABLES GENERALES DE COLOR Y TEMA
+   ===================================================== */
+:root {
+    --gold-primary: #ecb613;
+    --gold-hover: #d4a20f;
+    --gold-glow: rgba(236, 182, 19, 0.4);
+    --bg-dark: #191022;
+    --card-bg: rgba(30, 23, 38, 0.7);
+    --input-bg: #211c27;
+    --input-border: #473b54;
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+}
+
+/* =====================================================
+   BODY 
+   ===================================================== */
+body {
+    font-family: 'Spline Sans', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* =====================================================
+   CONTENEDOR DE LA PÁGINA REGISTRO
+   (centra SOLO la card)
+   ===================================================== */
+.register-page {
+    min-height: calc(100vh - 80px); /* ajustable según altura navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+/* =====================================================
+   FONDO: IMAGEN + OVERLAY
+   ===================================================== */
+.bg-image {
+    position: fixed;
+    inset: 0;
+    object-fit: cover;
+    opacity: 0.15;
+    z-index: -2;
+    mix-blend-mode: overlay;
+}
+
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(25,16,34,.9), #191022);
+    z-index: -1;
+}
+
+/* =====================================================
+   FONDO
+   ===================================================== */
+.bg-shape-tl {
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(236,182,19,.15), transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg-shape-tr-1 {
+    position: fixed;
+    top: -10%;
+    right: -5%;
+    width: 500px;
+    height: 500px;
+    border: 2px solid rgba(236,182,19,.15);
+    border-radius: 50%;
+    filter: blur(2px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg-shape-tr-2 {
+    position: fixed;
+    top: 5%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle at 30% 30%, rgba(236,182,19,.1), transparent 60%);
+    border: 1px solid rgba(236,182,19,.2);
+    border-radius: 50%;
+    filter: blur(5px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg-shape-br {
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    border: 40px solid rgba(236,182,19,.03);
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg-shape-br-inner {
+    position: fixed;
+    bottom: -5%;
+    right: 5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(236,182,19,.08), transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* =====================================================
+   CARD PRINCIPAL 
+   ===================================================== */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,.5);
+    position: relative;
+    overflow: hidden;
+    max-width: 520px;
+    width: 100%;
+}
+
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+        opacity: .8;
+    }
+
+/* =====================================================
+   INPUTS 
+   ===================================================== */
+.custom-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 50px;
+    padding: 4px 6px;
+    transition: all .3s ease;
+}
+
+    .custom-input-group:focus-within {
+        border-color: var(--gold-primary);
+        box-shadow: 0 0 0 4px var(--gold-glow);
+    }
+
+.input-icon {
+    padding: 0 12px 0 16px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    transition: color .3s;
+}
+
+.custom-input-group:focus-within .input-icon {
+    color: var(--gold-primary);
+}
+
+/* INPUT */
+.custom-input-group .form-control {
+    background: transparent;
+    border: none;
+    color: white;
+    box-shadow: none;
+    height: 46px;
+    padding-left: 0;
+}
+
+    .custom-input-group .form-control:focus {
+        background: transparent;
+        color: white;
+        box-shadow: none;
+    }
+
+    .custom-input-group .form-control::placeholder {
+        color: #6c757d;
+    }
+
+/* FIX AUTOFILL CHROME */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+}
+
+/* =====================================================
+   BOTÓN MOSTRAR / OCULTAR CONTRASEÑA
+   ===================================================== */
+.toggle-password {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding-right: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+    .toggle-password:hover {
+        color: #fff;
+    }
+
+/* =====================================================
+   BOTÓN REGISTRARSE
+   ===================================================== */
+.btn-gold {
+    background: var(--gold-primary);
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    padding: 12px;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all .3s ease;
+}
+
+    .btn-gold:hover {
+        background: var(--gold-hover);
+        color: #000;
+        box-shadow: 0 10px 20px -10px var(--gold-glow);
+        transform: scale(1.01);
+    }
+
+    .btn-gold:active {
+        transform: scale(.99);
+    }
+
+/* =====================================================
+   LINKS
+   ===================================================== */
+.link-gold {
+    color: var(--gold-primary);
+    text-decoration: none;
+}
+
+    .link-gold:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+/* =====================================================
+   VALIDACIONES
+   ===================================================== */
+.text-danger {
+    color: #ff6b6b !important;
+    font-size: .8rem;
+    margin-left: 1rem;
+    margin-top: 4px;
+    display: block;
+}

@@ -2,13 +2,14 @@
    ADMIN SKIN (Filtros / Tabla / Paginado)
    ================================ */
 .pelicula-index {
-    --admin-accent: #38bdf8; 
-    --admin-accent-2: #a78bfa; 
+    --admin-accent: #38bdf8;
+    --admin-accent-2: #a78bfa;
     --admin-panel: rgba(17, 24, 39, .72);
     --admin-panel-2: rgba(30, 41, 59, .72);
     --admin-stroke: rgba(255,255,255,.10);
     --admin-stroke-2: rgba(255,255,255,.16);
     --admin-glow: 0 0 0 .25rem rgba(56,189,248,.18);
+    
 }
 
 /* =================================================
@@ -145,6 +146,7 @@
             background: rgba(56,189,248,.06) !important;
         }
 
+
 /* =================================================
    SECCIÓN: PAGINADO (glass) - color admin
    ================================================= */
@@ -260,6 +262,11 @@
     box-shadow: 0 0 0 1px rgba(56,189,248,.35);
 }
 
+/*Strellas de raitin*/
+.pelicula-index .table-custom td .text-warning {
+    color: #ffc107 !important;
+}
+
 /* =================================================
    SECCIÓN: FONDO DEL PAGINADO (footer) 
    ================================================= */
@@ -268,6 +275,7 @@
     border-top: 1px solid rgba(255,255,255,.06);
 
 }
+
 
 
 

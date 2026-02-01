@@ -1,0 +1,211 @@
+﻿@* =========================================
+   VISTA: REGISTRO (Crear cuenta)
+   ========================================= *@
+
+@model ProyectoFinal4.ViewModels.UsuarioViewModel
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Usuario/registro.css" asp-append-version="true" />
+}
+
+@* =========================================
+   FONDO: Imagen + overlay + formas decorativas
+   ========================================= *@
+
+<!-- Imagen base del fondo -->
+<img class="bg-image"
+     alt="Dark cinema background"
+     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkRMedjlKp4o-qzUnqkCj8kfS59o9yIbUkHUDddb6yd2BoUekcPtZCQ6FE_inZ3i4H0Q3WJ7JfBi5JQhFhhEmwoEejlfna2nP3R8YBkXmOmTLVQ_fokIPIwy2qLO4ekioonw5WWoPsffJb4CyZlac8B8uR-TVPNVdyYzjcucItl-7AmMj3oLL3MGH5T1eabckYKU6ygCt0HnLxtInWjeDjrRHy3zu-71IKa7TzWO6vXY2NeDDSrQ-aah0ES8xYwOQJIrG8VzOMaMp9" />
+
+<!-- Overlay oscuro -->
+<div class="bg-overlay"></div>
+
+<!-- Formas decorativas del fondo -->
+<div class="bg-shape-tl"></div>        <!-- Glow superior izquierdo -->
+<div class="bg-shape-tr-1"></div>      <!-- Círculo superior derecho -->
+<div class="bg-shape-tr-2"></div>      <!-- Segundo círculo superior derecho -->
+<div class="bg-shape-br"></div>        <!-- Aro grande inferior derecho -->
+<div class="bg-shape-br-inner"></div>  <!-- Glow interno inferior derecho -->
+@* =========================================
+   CONTENEDOR PRINCIPAL + CARD
+   ========================================= *@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 d-flex justify-content-center">
+
+            <!-- Card glassmorphism -->
+            <div class="glass-card p-4 p-md-5">
+
+                @*Título + subtítulo*@
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold mb-2 text-white">Crear cuenta</h1>
+                    <p class="text-secondary mb-0">Únete a la comunidad de cinéfilos</p>
+                </div>
+
+                <form asp-action="Registro" method="post" class="needs-validation" >
+
+
+                    <div class="row g-3 mb-3">
+
+                        <!-- Campo: Nombre -->
+                        <div class="col-sm-6">
+                            <div class="d-flex flex-column">
+                                <div class="custom-input-group">
+                                    <!-- Ícono -->
+                                    <div class="input-icon">
+                                        <span class="material-symbols-outlined">person</span>
+                                    </div>
+
+                                    <!-- Input -->
+                                    <input asp-for="Nombre"
+                                           id="Nombre"
+                                           class="form-control"
+                                           placeholder="Nombre"
+                                           required
+                                           type="text" />
+                                </div>
+
+                                <!-- Validación -->
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Apellido -->
+                        <div class="col-sm-6">
+                            <div class="d-flex flex-column">
+                                <div class="custom-input-group">
+                                    <div class="input-icon">
+                                        <span class="material-symbols-outlined">badge</span>
+                                    </div>
+
+                                    <input asp-for="Apellido"
+                                           id="Apellido"
+                                           class="form-control"
+                                           placeholder="Apellido"
+                                           required
+                                           type="text" />
+                                </div>
+
+                                <span asp-validation-for="Apellido" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @*EMAIL*@
+                    <div class="mb-3">
+                        <div class="d-flex flex-column">
+                            <div class="custom-input-group">
+                                <div class="input-icon">
+                                    <span class="material-symbols-outlined">mail</span>
+                                </div>
+
+                                <input asp-for="Email"
+                                       id="Email"
+                                       class="form-control"
+                                       placeholder="Correo electrónico"
+                                       required
+                                       type="email" />
+                            </div>
+
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @* CONTRASEÑA *@
+                    <div class="mb-3">
+                        <div class="d-flex flex-column">
+                            <div class="custom-input-group">
+                                <div class="input-icon">
+                                    <span class="material-symbols-outlined">lock</span>
+                                </div>
+
+                                @* Input: Clave (sale type="password" por el DataType del VM) *@
+                                <input asp-for="Clave"
+                                       id="Clave"
+                                       type="password"
+                                       class="form-control"
+                                       placeholder="Contraseña"
+                                       required />
+
+                                @* Botón mostrar/ocultar: apunta al id real del input (Clave) *@
+                                <button class="toggle-password"
+                                        type="button"
+                                        onclick="toggleVisibility('Clave', this)">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+
+                            @* Validación correcta *@
+                            <span asp-validation-for="Clave" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @*CONFIRMAR CONTRASEÑA*@
+                    <div class="mb-4">
+                        <div class="d-flex flex-column">
+                            <div class="custom-input-group">
+                                <div class="input-icon">
+                                    <span class="material-symbols-outlined">lock_reset</span>
+                                </div>
+
+                                <input asp-for="ConfirmarClave"
+                                       id="ConfirmarClave"
+                                       class="form-control"
+                                       placeholder="Confirmar contraseña"
+                                       required
+                                       type="password" />
+
+                                <button class="toggle-password"
+                                        onclick="toggleVisibility('ConfirmarClave', this)"
+                                        type="button">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="ConfirmarClave" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @* BOTÓN: REGISTRARSE*@
+                    <div class="d-grid gap-2 mt-2">
+                        <button class="btn btn-gold shadow-sm" type="submit">
+                            <span>Registrarme</span>
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+
+                    @* LINK: IR A LOGIN*@
+                    <div class="text-center mt-4">
+                        <span class="text-secondary small">¿Ya tenés cuenta?</span>
+                        <a asp-action="Login"
+                           asp-controller="Usuario"
+                           class="link-gold small ms-1">
+                            Iniciá sesión
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('.material-symbols-outlined');
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "visibility_off"; // ahora se ve -> botón ofrece ocultar
+      } else {
+        input.type = "password";
+        icon.textContent = "visibility";     // ahora está oculto -> botón ofrece mostrar
+      }
+    }
+</script>
