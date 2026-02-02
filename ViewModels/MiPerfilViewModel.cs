@@ -12,23 +12,13 @@ namespace ProyectoFinal4.ViewModels
         [StringLength(50, MinimumLength = 2, ErrorMessage = "El apellido debe tener entre 2 y 50 caracteres.")]
         public string Apellido { get; set; }
 
-        // ⬇️ NO requerido por ahora
+        // NO requerido
 
         public string? Email { get; set; }
 
-        // ⬇️ NO requerido
+        // NO requerido
         public string? ImagenUrlPerfil { get; set; }
 
-        // ⬇️ NO requerido
-  
-        public string? ClaveActual { get; set; }
 
-        // ⬇️ NO requerido
-
-        public string? ClaveNueva { get; set; }
-
-        // ⬇️ NO requerido y CORREGIDO el Compare
-
-        public string? ConfirmarClave { get; set; }
     }
 }

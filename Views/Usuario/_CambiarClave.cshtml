@@ -1,0 +1,107 @@
+﻿@model ProyectoFinal4.ViewModels.MiPerfilClaveViewModel
+
+<form asp-controller="Usuario" asp-action="CambiarClave" method="post" novalidate>
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+    <!-- Contraseña actual -->
+    <div class="mb-3">
+        <div class="custom-input-group">
+            <div class="input-icon">
+                <span class="material-symbols-outlined">lock</span>
+            </div>
+
+            <input asp-for="ClaveActual"
+                   id="CurrentPassword"
+                   class="form-control"
+                   placeholder="Contraseña actual"
+                   type="password" />
+
+            <button class="toggle-password"
+                    type="button"
+                    onclick="toggleVisibility('CurrentPassword', this)">
+                <span class="material-symbols-outlined">visibility_off</span>
+            </button>
+        </div>
+
+        <span asp-validation-for="ClaveActual" class="validation-msg"></span>
+    </div>
+
+    <!-- Nueva contraseña -->
+    <div class="mb-3">
+        <div class="custom-input-group">
+            <div class="input-icon">
+                <span class="material-symbols-outlined">lock_reset</span>
+            </div>
+
+            <input asp-for="ClaveNueva"
+                   id="NewPassword"
+                   class="form-control"
+                   placeholder="Nueva contraseña"
+                   type="password" />
+
+            <button class="toggle-password"
+                    type="button"
+                    onclick="toggleVisibility('NewPassword', this)">
+                <span class="material-symbols-outlined">visibility_off</span>
+            </button>
+        </div>
+
+        <span asp-validation-for="ClaveNueva" class="validation-msg"></span>
+    </div>
+
+    <!-- Confirmar nueva contraseña -->
+    <div class="mb-3">
+        <div class="custom-input-group">
+            <div class="input-icon">
+                <span class="material-symbols-outlined">lock_reset</span>
+            </div>
+
+            <input asp-for="ConfirmarClave"
+                   id="ConfirmNewPassword"
+                   class="form-control"
+                   placeholder="Repetir nueva contraseña"
+                   type="password" />
+
+            <button class="toggle-password"
+                    type="button"
+                    onclick="toggleVisibility('ConfirmNewPassword', this)">
+                <span class="material-symbols-outlined">visibility_off</span>
+            </button>
+        </div>
+
+        <span asp-validation-for="ConfirmarClave" class="validation-msg"></span>
+    </div>
+
+    @if (TempData["MensajeClave"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["MensajeClave"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorClave"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorClave"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Botones -->
+    <div class="d-grid mt-4">
+        <div class="d-flex gap-2">
+            <button class="btn-gold shadow-sm flex-fill" type="submit">
+                <span>Guardar nueva contraseña</span>
+            </button>
+
+            <button class="btn-cancel flex-fill"
+                    type="button"
+                    onclick="cancelPasswordChange()">
+                <span>Cancelar</span>
+            </button>
+        </div>
+    </div>
+</form>

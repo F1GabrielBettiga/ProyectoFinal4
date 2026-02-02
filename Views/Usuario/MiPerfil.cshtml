@@ -44,12 +44,15 @@
                     <p class="text-white-dim small mb-0">Gestioná tu información personal</p>
                 </div>
 
-                <form asp-controller="Usuario" asp-action="MiPerfil" method="post" novalidate>
+                <!-- =========================
+                     FORM PERFIL (Nombre/Apellido)
+                     ========================= -->
+                <form asp-controller="Usuario" asp-action="ActualizarPerfil" method="post" novalidate>
 
                     @Html.AntiForgeryToken()
 
                     <!-- Input oculto para foto -->
-                    <input  id="AvatarFile" type="file" class="d-none" accept="image/*" />
+                    <input id="AvatarFile" type="file" class="d-none" accept="image/*" />
 
                     <span class="section-title">Información personal</span>
 
@@ -59,14 +62,13 @@
                                 <div class="input-icon">
                                     <span class="material-symbols-outlined" style="font-size: 20px;">person</span>
                                 </div>
-                                <input 
-                                       asp-for="Nombre"
-                                       
+                                <input asp-for="Nombre"
                                        class="form-control"
                                        placeholder="Nombre"
                                        type="text" />
                             </div>
-                            <span  class="validation-msg"></span>
+
+                            <span asp-validation-for="Nombre" class="validation-msg"></span>
                         </div>
 
                         <div class="col-6">
@@ -74,14 +76,13 @@
                                 <div class="input-icon">
                                     <span class="material-symbols-outlined" style="font-size: 20px;">badge</span>
                                 </div>
-                                <input 
-                                       asp-for="Apellido"
-                                       
+                                <input asp-for="Apellido"
                                        class="form-control"
                                        placeholder="Apellido"
                                        type="text" />
                             </div>
-                            <span  class="validation-msg"></span>
+
+                            <span asp-validation-for="Apellido" class="validation-msg"></span>
                         </div>
                     </div>
 
@@ -91,139 +92,57 @@
                                 <span class="material-symbols-outlined" style="font-size: 20px;">mail</span>
                             </div>
 
-                            <input 
-                                   asp-for="Email"
-                                   
+                            <input asp-for="Email"
                                    class="form-control"
                                    placeholder="Correo electrónico"
                                    type="email"
                                    disabled />
                         </div>
-
-                        <div class="form-text text-white-dim ms-3 hint-email">
-                            El correo electrónico no se puede modificar.
-                        </div>
                     </div>
 
                     <!-- Guardar cambios personales -->
-                    <div class="d-grid mb-5">
-                        <button class="btn-gold shadow-sm w-100" type="submit" name="action" value="SaveProfile">
+                    <div class="d-grid mb-4">
+                        <button class="btn-gold shadow-sm w-100" type="submit">
                             <span>Guardar cambios</span>
                         </button>
                     </div>
                 </form>
-                    @if (ViewBag.Mensaje != null)
-                    {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            @ViewBag.Mensaje
-                            <button type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="alert"
-                                    aria-label="Close">
-                            </button>
-                        </div>
-                    }
-                    <!-- Seguridad -->
-                    <div class="border-top border-secondary pt-4 mb-2">
-                        <span class="section-title mb-3">Seguridad</span>
 
-                        <div class="d-grid mb-3">
-                            <button class="btn-gold-outline w-100"
-                                    type="button"
-                                    onclick="togglePasswordBlock()">
-                                Actualizar contraseña
-                            </button>
-                        </div>
+                @* Mensaje solo de perfil *@
+                @if (TempData["MensajePerfil"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["MensajePerfil"]
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close">
+                        </button>
+                    </div>
+                }
 
-                        <div class="d-none" id="security-form-block">
+                <!-- =========================
+                     SEGURIDAD (Partial)
+                     ========================= -->
+                <div class="border-top border-secondary pt-4 mb-2">
+                    <span class="section-title mb-3">Seguridad</span>
 
-                            <!-- Contraseña actual -->
-                            <div class="mb-3">
-                                <div class="custom-input-group">
-                                    <div class="input-icon">
-                                        <span class="material-symbols-outlined">lock</span>
-                                    </div>
-
-                                    <input 
-                                           id="CurrentPassword"
-                                           class="form-control"
-                                           placeholder="Contraseña actual"
-                                           type="password" />
-
-                                    <button class="toggle-password"
-                                            type="button"
-                                            onclick="toggleVisibility('CurrentPassword', this)">
-                                        <span class="material-symbols-outlined">visibility_off</span>
-                                    </button>
-                                </div>
-                                <span  class="validation-msg"></span>
-                            </div>
-
-                            <!-- Nueva contraseña -->
-                            <div class="mb-3">
-                                <div class="custom-input-group">
-                                    <div class="input-icon">
-                                        <span class="material-symbols-outlined">lock_reset</span>
-                                    </div>
-
-                                    <input 
-                                           id="NewPassword"
-                                           class="form-control"
-                                           placeholder="Nueva contraseña"
-                                           type="password" />
-
-                                    <button class="toggle-password"
-                                            type="button"
-                                            onclick="toggleVisibility('NewPassword', this)">
-                                        <span class="material-symbols-outlined">visibility_off</span>
-                                    </button>
-                                </div>
-                                <span  class="validation-msg"></span>
-                            </div>
-
-                            <!-- Repetir nueva contraseña -->
-                            <div class="mb-3">
-                                <div class="custom-input-group">
-                                    <div class="input-icon">
-                                        <span class="material-symbols-outlined">lock_reset</span>
-                                    </div>
-
-                                    <input 
-                                           id="ConfirmNewPassword"
-                                           class="form-control"
-                                           placeholder="Repetir nueva contraseña"
-                                           type="password" />
-
-                                    <button class="toggle-password"
-                                            type="button"
-                                            onclick="toggleVisibility('ConfirmNewPassword', this)">
-                                        <span class="material-symbols-outlined">visibility_off</span>
-                                    </button>
-                                </div>
-                                <span  class="validation-msg"></span>
-                            </div>
-
-                            <!-- Botones: Guardar + Cancelar -->
-                            <div class="d-grid mt-4">
-                                <div class="d-flex gap-2">
-                                    <button class="btn-gold shadow-sm flex-fill"
-                                            type="submit"
-                                            name="action"
-                                            value="ChangePassword">
-                                        <span>Guardar nueva contraseña</span>
-                                    </button>
-
-                                    <button class="btn-cancel flex-fill"
-                                            type="button"
-                                            onclick="cancelPasswordChange()">
-                                        <span>Cancelar</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="d-grid mb-3">
+                        <button class="btn-gold-outline w-100"
+                                type="button"
+                                onclick="togglePasswordBlock()">
+                            Actualizar contraseña
+                        </button>
                     </div>
 
-                
+                    @{
+                        var mostrarSeguridad = TempData["MensajeClave"] != null || TempData["ErrorClave"] != null;
+                    }
+                    <div class="@(mostrarSeguridad ? "" : "d-none")" id="security-form-block">
+                        <partial name="_CambiarClave" model="new ProyectoFinal4.ViewModels.MiPerfilClaveViewModel()" />
+                    </div>
+                </div>
+
             </div>
 
             <div class="text-center mt-4 w-100">

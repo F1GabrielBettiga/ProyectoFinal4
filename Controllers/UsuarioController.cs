@@ -41,7 +41,7 @@ namespace ProyectoFinal4.Controllers
                 else
                 {
                     //Si el login no fue exitoso, mostramos un mensaje de error
-                    ModelState.AddModelError(string.Empty, resultado.ToString());
+                    ModelState.AddModelError(string.Empty, "Error. Revisá los datos ingresados.");
                 }
             }
             return View(usuario);
@@ -85,56 +85,86 @@ namespace ProyectoFinal4.Controllers
 
             return View(usuario);
         }
-
         [HttpGet]
         public async Task<IActionResult> MiPerfil()
         {
-            var usuarioActual =  await _userManager.GetUserAsync(User); //la variable User es global y representa el usuario logeado y solo trae los datos basicos por esa razon vamos a tener que buscar el usuario en la base de datos
+            var usuarioActual = await _userManager.GetUserAsync(User);
 
             if (usuarioActual == null)
-            {
                 return RedirectToAction("Login", "Usuario");
-            }
-            var usuarioLogeado = new MiPerfilViewModel
+
+            var vm = new MiPerfilViewModel
             {
                 Nombre = usuarioActual.Nombre,
                 Apellido = usuarioActual.Apellido,
                 Email = usuarioActual.Email,
                 ImagenUrlPerfil = usuarioActual.ImagenUrlPerfil
             };
-            //esto nos permite mostrar los datos del usuario en la vista
 
-
-            return View(usuarioLogeado);
+            return View(vm); // esto abre Views/Usuario/MiPerfil.cshtml
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MiPerfil(MiPerfilViewModel usuarioVM)
+        public async Task<IActionResult> ActualizarPerfil(MiPerfilViewModel usuarioVM)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View("MiPerfil", usuarioVM);
+
+            var usuarioActual = await _userManager.GetUserAsync(User);
+            if (usuarioActual == null)
+                return RedirectToAction("Login", "Usuario");
+
+            usuarioActual.Nombre = usuarioVM.Nombre;
+            usuarioActual.Apellido = usuarioVM.Apellido;
+
+            var resultado = await _userManager.UpdateAsync(usuarioActual);
+
+            if (!resultado.Succeeded)
             {
-                var usuarioActual = await _userManager.GetUserAsync(User); //la variable User es global y representa el usuario logeado y solo trae los datos basicos por esa razon vamos a tener que buscar el usuario en la base de datos
+                foreach (var error in resultado.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
 
-                usuarioActual.Nombre = usuarioVM.Nombre;
-                usuarioActual.Apellido = usuarioVM.Apellido;
-
-                var resultado = await _userManager.UpdateAsync(usuarioActual);
-                if (resultado.Succeeded)
-                {
-                    ViewBag.Mensaje = "Perfil actualizado correctamente";
-                    return View(usuarioVM);//Redirigimos al usuario a la misma vista para que vea los cambios realizados
-                }
-                else
-                {
-                    foreach (var error in resultado.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description); //Aqui se agregan los errores al ModelState para mostrarlos en la vista
-                    }
-                }
-
+                return View("MiPerfil", usuarioVM);
             }
 
-            return View(usuarioVM);
+            TempData["MensajePerfil"] = "Perfil actualizado correctamente.";
+            return RedirectToAction(nameof(MiPerfil));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CambiarClave(MiPerfilClaveViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Guardamos los errores para mostrarlos
+                var errores = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                TempData["ErrorClave"] = string.Join(" ", errores);
+                return RedirectToAction(nameof(MiPerfil));
+            }
+
+            var usuario = await _userManager.GetUserAsync(User);
+            if (usuario == null)
+                return RedirectToAction("Login", "Usuario");
+
+            var result = await _userManager.ChangePasswordAsync(usuario, model.ClaveActual, model.ClaveNueva); //le enviamos el usuario, la clave actual y la nueva clave
+
+            if (!result.Succeeded)
+            {
+                TempData["ErrorClave"] = "Error, no se pudo actualizar la contraseña. Revisá los datos ingresados.";
+                return RedirectToAction(nameof(MiPerfil));
+            }
+
+            await _signInManager.RefreshSignInAsync(usuario);
+
+            TempData["MensajeClave"] = "Contraseña actualizada correctamente.";
+            return RedirectToAction(nameof(MiPerfil));
         }
 
 
