@@ -17,6 +17,8 @@ namespace ProyectoFinal4.ViewModels
         public string? Email { get; set; }
 
         // NO requerido
+        public IFormFile? ImagenPerfil { get; set; } // para subir nueva imagen
+
         public string? ImagenUrlPerfil { get; set; }
 
 

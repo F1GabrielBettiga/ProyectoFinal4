@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal4.Models;
+using ProyectoFinal4.Service;
 using ProyectoFinal4.ViewModels;
 
 namespace ProyectoFinal4.Controllers
@@ -11,10 +12,12 @@ namespace ProyectoFinal4.Controllers
     {
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
-        public UsuarioController(UserManager<Usuario> userManager, SignInManager<Usuario> singnInManager)
+        private readonly ImagenStorage _imagenStorage; 
+        public UsuarioController(UserManager<Usuario> userManager, SignInManager<Usuario> singnInManager, ImagenStorage imagenStorage)
         {
             _userManager = userManager; //nos sirve para la parte del registro
             _signInManager = singnInManager;//nos siirve para la parte del login
+            _imagenStorage = imagenStorage; // servicio para manejo de imagenes
         }
 
 
@@ -64,7 +67,7 @@ namespace ProyectoFinal4.Controllers
                     Email = usuario.Email,
                     Nombre = usuario.Nombre,
                     Apellido = usuario.Apellido,
-                    ImagenUrlPerfil = "default-profile.jpg",
+                    ImagenUrlPerfil = "/images/defaults/default-profile.jpg",
                 };
                 var resultado = await _userManager.CreateAsync(NuevoUsuario, usuario.Clave); //Aqui se crea el usuario en la base de datos
 
@@ -93,6 +96,7 @@ namespace ProyectoFinal4.Controllers
             if (usuarioActual == null)
                 return RedirectToAction("Login", "Usuario");
 
+
             var vm = new MiPerfilViewModel
             {
                 Nombre = usuarioActual.Nombre,
@@ -115,6 +119,26 @@ namespace ProyectoFinal4.Controllers
             var usuarioActual = await _userManager.GetUserAsync(User);
             if (usuarioActual == null)
                 return RedirectToAction("Login", "Usuario");
+
+            // Actualiza la imagen de perfil solo si el usuario selecciona una nueva; si queda el placeholder, no se guarda nada y elimina la anterior si existe
+            try
+            {
+                if (usuarioVM.ImagenPerfil is not null && usuarioVM.ImagenPerfil.Length > 0)
+                {
+                    // opcional: borrar la anterior (si no es placeholder)
+                    if (!string.IsNullOrWhiteSpace(usuarioActual.ImagenUrlPerfil))
+                        await _imagenStorage.DeleteAsync(usuarioActual.ImagenUrlPerfil);
+
+                    var nuevaRuta = await _imagenStorage.SaveAsync(usuarioActual.Id, usuarioVM.ImagenPerfil);
+                    usuarioActual.ImagenUrlPerfil = nuevaRuta;
+                    usuarioVM.ImagenUrlPerfil = nuevaRuta;
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(usuarioVM);
+            }
 
             usuarioActual.Nombre = usuarioVM.Nombre;
             usuarioActual.Apellido = usuarioVM.Apellido;

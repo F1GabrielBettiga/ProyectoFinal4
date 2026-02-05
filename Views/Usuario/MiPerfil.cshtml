@@ -24,31 +24,32 @@
 
             <div class="glass-card p-4 p-md-5 w-100">
 
-                <!-- Header -->
-                <div class="text-center mb-4">
-                    <div class="position-relative d-inline-block mb-3">
-                        <img alt="Profile Avatar"
-                             class="avatar-img"
-                             src="" />
+                <form asp-controller="Usuario" asp-action="ActualizarPerfil" method="post" enctype="multipart/form-data" novalidate>
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <div class="position-relative d-inline-block mb-3">
+                            <img alt="Profile Avatar"
+                                 id="profileImage"
+                                 class="avatar-img"
+                                 src="@Model.ImagenUrlPerfil" />
 
-                        <!-- Botón editar imagen -->
-                        <button aria-label="Editar foto de perfil"
-                                class="btn-edit-avatar"
-                                type="button"
-                                onclick="document.getElementById('AvatarFile')?.click()">
-                            <span class="material-symbols-outlined" style="font-size: 18px;">photo_camera</span>
-                        </button>
+                            <!-- Botón editar imagen -->
+                            <button aria-label="Editar foto de perfil"
+                                    class="btn-edit-avatar"
+                                    type="button"
+                                    onclick="document.getElementById('ImagenPerfil')?.click()">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">photo_camera</span>
+                            </button>
+                            <input type="file" asp-for="ImagenPerfil" accept="image/png,image/jpeg,image/webp" class="form-control" onchange="previewImage(this)" />
+                        </div>
+
+                        <h1 class="h3 fw-bold mb-1 text-white">Mi Perfil</h1>
+                        <p class="text-white-dim small mb-0">Gestioná tu información personal</p>
                     </div>
 
-                    <h1 class="h3 fw-bold mb-1 text-white">Mi Perfil</h1>
-                    <p class="text-white-dim small mb-0">Gestioná tu información personal</p>
-                </div>
-
-                <!-- =========================
-                     FORM PERFIL (Nombre/Apellido)
-                     ========================= -->
-                <form asp-controller="Usuario" asp-action="ActualizarPerfil" method="post" novalidate>
-
+                    <!-- =========================
+                         FORM PERFIL (Nombre/Apellido)
+                         ========================= -->
                     @Html.AntiForgeryToken()
 
                     <!-- Input oculto para foto -->
@@ -160,10 +161,13 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
+        
+        // Muestra u oculta el bloque de seguridad (toggle de visibilidad)
         function togglePasswordBlock() {
             document.getElementById('security-form-block').classList.toggle('d-none');
         }
 
+        // Mostrar/ocultar contraseña
         function toggleVisibility(inputId, btn) {
             const input = document.getElementById(inputId);
             const icon = btn.querySelector('.material-symbols-outlined');
@@ -176,7 +180,7 @@
                 icon.textContent = "visibility_off";
             }
         }
-
+        // Cancelar cambio de contraseña
         function cancelPasswordChange() {
             const block = document.getElementById('security-form-block');
             const ids = ['CurrentPassword', 'NewPassword', 'ConfirmNewPassword'];
@@ -205,5 +209,17 @@
             // ocultar bloque
             block.classList.add('d-none');
         }
+
+        // Vista previa de imagen de perfil seleccionada
+            function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
     </script>
 }

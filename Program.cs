@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProyectoFinal4.Data;
 using ProyectoFinal4.Models;
+using ProyectoFinal4.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +56,13 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login"; //ruta personalizada para el login
     options.AccessDeniedPath = "/Account/AccessDenied"; //ruta personalizada para acceso denegado
 }); //si no colocamos estas rutas, usaria las por defecto de Identity que no tenemos porque no usamos la UI de Identity y no las encotraria 
+
+
+//Servicios de archivos (Imganenes en este caso)
+builder.Services.AddScoped<ImagenStorage>(); 
+builder.Services.Configure<FormOptions>(o => { o.MultipartBodyLengthLimit = 2 * 1024 * 1024; }); //limite de 2 MB para las imagenes
+
+
 
 var app = builder.Build();
 
