@@ -157,6 +157,8 @@ namespace ProyectoFinal4.Controllers
             var pelicula = await _context.Peliculas
                 .Include(p => p.Genero)
                 .Include(p => p.Plataforma)
+                .Include(p => p.Listareviews)
+                .ThenInclude(r => r.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pelicula == null)
             {

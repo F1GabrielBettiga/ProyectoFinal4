@@ -7,7 +7,9 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/pages/Pelicula/details.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/Home/_CreateReview.css" asp-append-version="true" />
 }
+
 
 <main class="container py-5">
 
@@ -115,41 +117,54 @@
                     </h3>
 
                     <!-- Reseña 1 -->
-                    <div class="review-card">
-                        <div class="d-flex gap-3 align-items-start">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVTUYFoUvhfoQ4KSwDpdrNYFgKuwUOQML2VE11XJ6ShFei-L7UZL3BNq-xZMZt3Z7gk8Qvi3nKn0QaGEOfbRm3AtSTeS8MiaV2n5Ah7kcEPV_30GBwz01dHDFPIXd-mYkMtDsTLJ7c4ettdt5H80clY1ozGPQ7fU3XX2xmE7YK3eHEuLvxgH9782-sYLqZ4NSfvSbjulfIoYRBp3-YWaVswjylpOW-YkmgchaY2d7MGlJLZNRJeOv8ILfTDlbivRtC39UC9FV2my_l"
-                                 class="user-avatar"
-                                 alt="Elena R.">
+                    @foreach (var item in Model.Listareviews)
+                    {
+                        <div class="review-card">
+                            <div class="d-flex gap-3 align-items-start">
+                                <img src=@item.Usuario.ImagenUrlPerfil
+                                class="user-avatar"
+                                alt="Imagen Usuario">
 
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between mb-1">
-                                    <h5 class="mb-0 fs-6 fw-bold">Elena R.</h5>
-                                    <div class="rating-stars">
-                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
-                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
-                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
-                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
-                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <div>
+                                        <h5 class="mb-0 fs-6 fw-bold">@item.Usuario.Nombre @item.Usuario.Apellido </h5>
+                                            <span class="text-muted small">@item.FechaReview.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="rating-stars">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= item.Rating)
+                                                {
+
+                                                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0">star</span>
+                                                }
+                                            }
+                                            
+                                        </div>
                                     </div>
-                                </div>
 
-                                <p class="text-muted small mb-0">
-                                    Absolutamente impresionante. La banda sonora de Hans Zimmer es de otro mundo.
-                                </p>
+                                    <p class="text-muted small mb-0">
+                                        @item.Comentario
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
                 <!-- Acciones -->
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <a asp-action=""
-                           asp-route-id=""
-                           class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
-                            <span class="material-symbols-outlined">edit</span>
-                            Crear Reseña
-                        </a>
+                        <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" type="button"
+                                data-bs-toggle="modal" data-bs-target="#createReviewModal">
+                            <span class="material-symbols-outlined">edit</span>Crear Reseña
+                        </button>
+                        
                     </div>
 
                     <div class="col-sm-6">
@@ -165,3 +180,16 @@
         </div>
     </div>
 </main>
+
+
+@{
+    // Preparar el ViewModel para la vista parcial de crear reseña
+    var reviewViewModel = new ProyectoFinal4.ViewModels.ReviewCreateViewModel
+    {
+        PeliculaId = Model.Id,
+        PeliculaTitulo = Model.Titulo
+    };
+
+    // Renderizar la vista parcial para el modal de crear reseña
+}
+<partial name="~/Views/Review/_CreateReview.cshtml" model="reviewViewModel" /> @*VISTA PARCIAL PARA EL MODAL DE CREAR UNA REVIEW*@
