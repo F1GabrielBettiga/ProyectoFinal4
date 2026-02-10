@@ -1,21 +1,39 @@
 ﻿
-
-
-.rating-stars input[type="radio"] {
+.create-review-rating input[type="radio"] {
     display: none;
 }
 
-.rating-stars label {
+.create-review-rating {
+    display: flex;
+    flex-direction: row-reverse; 
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2px;
+    user-select: none;
+}
+
+.create-review-star {
     font-size: 2rem;
     color: #ddd;
     cursor: pointer;
     transition: color 0.2s;
+    line-height: 1;
 }
 
-    .rating-stars input[type="radio"]:checked ~ label,
-    .rating-stars label:hover,
-    .rating-stars label:hover ~ label {
+    
+    .create-review-star:hover,
+    .create-review-star:hover ~ .create-review-star {
         color: #ffc107;
     }
 
 
+.create-review-rating input[type="radio"]:checked ~ .create-review-star {
+    color: #ffc107;
+}
+
+
+.create-review-rating input[type="radio"]:focus-visible + .create-review-star {
+    outline: 2px solid rgba(255, 193, 7, 0.6);
+    outline-offset: 4px;
+    border-radius: 6px;
+}

@@ -109,6 +109,18 @@
                     </a>
                 </div>
 
+                <!--Mensaje de error -->
+                @if (TempData["ReviewExiste"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @TempData["ReviewExiste"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+
+
+
                 <!-- Reseñas -->
                 <div class="mb-5">
                     <h3 class="section-title">
@@ -160,7 +172,8 @@
                 <!-- Acciones -->
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" type="button"
+                        <!-- BTN AGREGAR RESEÑA -->
+                        <button  class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" type="button"
                                 data-bs-toggle="modal" data-bs-target="#createReviewModal">
                             <span class="material-symbols-outlined">edit</span>Crear Reseña
                         </button>

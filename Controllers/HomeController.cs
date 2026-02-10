@@ -6,6 +6,7 @@ using ProyectoFinal4.Models;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 
 namespace ProyectoFinal4.Controllers
 {
@@ -164,6 +165,10 @@ namespace ProyectoFinal4.Controllers
             {
                 return NotFound();
             }
+
+
+            
+
 
             return View(pelicula);
         }

@@ -13,51 +13,52 @@
             </div>
 
             <form asp-controller="Review" asp-action="Create" method="post">
-            <div class="modal-body">
-                
-                <input type="hidden" asp-for="PeliculaId" />
+                <div class="modal-body">
 
-                <div class="mb-3">
-                    <label class="form-label">Calificación</label>
+                    <input type="hidden" asp-for="PeliculaId" />
 
-                    <div class="rating-stars">
-                        <input type="radio" asp-for="Rating" value="5" id="star5" />
-                        <label for="star5" class="star">★</label>
+                    <div class="mb-3">
+                        <label class="form-label">Calificación</label>
 
-                        <input type="radio" asp-for="Rating" value="4" id="star4" />
-                        <label for="star4" class="star">★</label>
+                        <!-- Rating del modal (clases propias para NO chocar con la vista detalle) -->
+                        <div class="create-review-rating" aria-label="Calificación por estrellas">
+                            <input type="radio" asp-for="Rating" value="5" id="cr-star5" />
+                            <label for="cr-star5" class="create-review-star" title="5 estrellas">★</label>
 
-                        <input type="radio" asp-for="Rating" value="3" id="star3" />
-                        <label for="star3" class="star">★</label>
+                            <input type="radio" asp-for="Rating" value="4" id="cr-star4" />
+                            <label for="cr-star4" class="create-review-star" title="4 estrellas">★</label>
 
-                        <input type="radio" asp-for="Rating" value="2" id="star2" />
-                        <label for="star2" class="star">★</label>
+                            <input type="radio" asp-for="Rating" value="3" id="cr-star3" />
+                            <label for="cr-star3" class="create-review-star" title="3 estrellas">★</label>
 
-                        <input type="radio" asp-for="Rating" value="1" id="star1" />
-                        <label for="star1" class="star">★</label>
+                            <input type="radio" asp-for="Rating" value="2" id="cr-star2" />
+                            <label for="cr-star2" class="create-review-star" title="2 estrellas">★</label>
+
+                            <input type="radio" asp-for="Rating" value="1" id="cr-star1" />
+                            <label for="cr-star1" class="create-review-star" title="1 estrella">★</label>
+                        </div>
+
+                        <span asp-validation-for="Rating" class="text-danger"></span>
                     </div>
 
-                    <span asp-validation-for="Rating" class="text-danger"></span>
+                    <div class="mb-3">
+                        <label asp-for="Comentario" class="form-label">Comentario</label>
+                        <textarea asp-for="Comentario"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Comparte tu opinión"></textarea>
+                        <span asp-validation-for="Comentario" class="text-danger"></span>
+                    </div>
+
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="Comentario" class="form-label">Comentario</label>
-                    <textarea asp-for="Comentario"
-                              class="form-control"
-                              rows="4"
-                              placeholder="Comparte tu opinión"></textarea>
-                    <span asp-validation-for="Comentario" class="text-danger"></span>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
-            
-
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
             </form>
+
         </div>
     </div>
 </div>
+

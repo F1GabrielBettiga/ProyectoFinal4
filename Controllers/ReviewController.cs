@@ -48,6 +48,16 @@ namespace ProyectoFinal4.Controllers
             {
                 review.UsuarioId = _userManager.GetUserId(User); // Obtener el ID del usuario actual
 
+                // Verificar si el usuario ya ha realizado una reseña para la película
+                var reviewExistente = _context.Reviews
+                    .FirstOrDefault(r => r.PeliculaId == review.PeliculaId && r.UsuarioId == review.UsuarioId);
+                // Si ya existe una reseña, mostrar un mensaje de error
+                if (reviewExistente != null)
+                {
+                    TempData["ReviewExiste"] = "Ya has realizado una reseña para esta pelicula";
+                    return RedirectToAction("Details", "Home", new { id = review.PeliculaId });
+                }
+
                 if (ModelState.IsValid)
                 {
                     var nuevaReview = new Review
