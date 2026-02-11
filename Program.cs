@@ -73,7 +73,9 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<MovieDbContext>();
-        await DbSeeder.Seed(context);
+        var userManager = services.GetRequiredService<UserManager<Usuario>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await DbSeeder.Seed(context, userManager, roleManager);
     }
     catch (Exception ex)
     {

@@ -72,7 +72,7 @@ namespace ProyectoFinal4.Controllers
                     Email = usuario.Email,
                     Nombre = usuario.Nombre,
                     Apellido = usuario.Apellido,
-                    ImagenUrlPerfil = "/images/defaults/default-profile.jpg",
+                    ImagenUrlPerfil = "/images/default/default-profile.jpg",
                 };
                 var resultado = await _userManager.CreateAsync(NuevoUsuario, usuario.Clave); //Aqui se crea el usuario en la base de datos
 

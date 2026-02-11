@@ -25,7 +25,7 @@ namespace ProyectoFinal4.Data
                     Email = "admin@admin.com",
                     Nombre = "Admin",
                     Apellido = "Sistema",
-                    ImagenUrlPerfil = "/images/defaults/default-profile.jpg"
+                    ImagenUrlPerfil = "/images/default/default-profile.jpg"
                 };
 
                 var result = await userManager.CreateAsync(adminUser, "Admin123");

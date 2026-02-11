@@ -166,8 +166,11 @@
                                    href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="text-end me-2 d-none d-lg-block" style="line-height:1;">
                                         <div class="fw-medium small">@usuarioActual.Nombre @usuarioActual.Apellido</div>
-                                        <div class="small text-secondary" style="font-size:0.75rem;">Administrator</div>
-                                    </div>
+                                        <div class="small text-secondary" style="font-size:0.75rem;">
+                                            @if (await UserManager.IsInRoleAsync(usuarioActual, "Admin")) { <span>Administrador</span>} else { }
+                                            
+                                        </div>
+                                  </div>
 
                                     <img src=@usuarioActual.ImagenUrlPerfil
                                          alt="User" width="36" height="36"
