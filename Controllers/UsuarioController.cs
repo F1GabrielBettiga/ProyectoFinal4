@@ -1,23 +1,28 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ProyectoFinal4.Data;
 using ProyectoFinal4.Models;
 using ProyectoFinal4.Service;
 using ProyectoFinal4.ViewModels;
 
 namespace ProyectoFinal4.Controllers
 {
-    
+
     public class UsuarioController : Controller
 
     {
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
-        private readonly ImagenStorage _imagenStorage; 
-        public UsuarioController(UserManager<Usuario> userManager, SignInManager<Usuario> singnInManager, ImagenStorage imagenStorage)
+        private readonly ImagenStorage _imagenStorage;
+        private readonly MovieDbContext _context;
+        public UsuarioController(UserManager<Usuario> userManager, SignInManager<Usuario> singnInManager, ImagenStorage imagenStorage, MovieDbContext context)
         {
             _userManager = userManager; //nos sirve para la parte del registro
             _signInManager = singnInManager;//nos siirve para la parte del login
             _imagenStorage = imagenStorage; // servicio para manejo de imagenes
+            _context = context; // para acceder a las reseñas del usuario
         }
 
 
@@ -29,7 +34,7 @@ namespace ProyectoFinal4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] //Esto es para evitar ataques CSRF
-        public async Task <IActionResult> Login(LoginViewModel usuario)
+        public async Task<IActionResult> Login(LoginViewModel usuario)
         {
             //Validamos si el modelo es valido
             if (ModelState.IsValid)
@@ -203,6 +208,32 @@ namespace ProyectoFinal4.Controllers
 
         public IActionResult AccessDenied()
         {
+            return View();
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> MisReseñas()
+        {
+            var usuarioActual = await _userManager.GetUserAsync(User);
+
+            if (usuarioActual == null)
+                return RedirectToAction("Login", "Usuario");
+
+            //Cargamos las reseñas del usuario logueado
+            var listaDeReseñas = await _context.Reviews
+                                .Where(r => r.UsuarioId == usuarioActual.Id)
+                                .Include(r => r.Pelicula)
+                                .ToListAsync();
+
+            return View(listaDeReseñas);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MisReseñas(int id)
+        {
+
             return View();
         }
 

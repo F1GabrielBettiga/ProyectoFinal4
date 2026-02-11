@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProyectoFinal4.Data;
 using ProyectoFinal4.Models;
 using ProyectoFinal4.ViewModels;
@@ -82,25 +83,83 @@ namespace ProyectoFinal4.Controllers
         }
 
         // GET: ReviewController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int idReview)
         {
-            return View();
+            // Validar que el ID sea válido
+            if (idReview <= 0)
+            {
+                return NotFound();
+            }
+            // Obtener el usuario actual
+            var usuarioActual = _userManager.GetUserAsync(User).Result;
+
+
+            // Buscar la reseña por ID y verificar que pertenezca al usuario actual tambien incluir la pelicula para mostrar su titulo en la vista
+            var review = _context.Reviews
+                            .Include(r => r.Pelicula)
+                            .FirstOrDefault(r => r.Id == idReview && r.UsuarioId == usuarioActual.Id);
+
+            // Si no se encuentra la reseña o no pertenece al usuario actual, retornar NotFound
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+
+            // Crear un ViewModel para pasar los datos a la vista de edición
+            ReviewCreateViewModel reviewEditar = new ReviewCreateViewModel
+            {
+                Id = review.Id,
+                PeliculaId = review.PeliculaId,
+                UsuarioId = review.UsuarioId,
+                Rating = review.Rating,
+                Comentario = review.Comentario,
+                UrlImagenPelicula = review.Pelicula?.PosterUrlPortada,               
+                PeliculaTitulo = review.Pelicula.Titulo
+            };
+
+
+            return View(reviewEditar);
         }
 
         // POST: ReviewController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(ReviewCreateViewModel reviewEditar)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(reviewEditar);
             }
-            catch
+
+            if (!reviewEditar.Id.HasValue || reviewEditar.Id.Value <= 0)
             {
-                return View();
+                return NotFound();
             }
+
+            // Usuario logueado
+            var usuarioActual = await _userManager.GetUserAsync(User);
+            if (usuarioActual == null)
+                return RedirectToAction("Login", "Usuario");
+
+            // Traigo la review SOLO si es del usuario
+            var reviewDb = await _context.Reviews
+                .FirstOrDefaultAsync(r => r.Id == reviewEditar.Id.Value && r.UsuarioId == usuarioActual.Id);
+
+            if (reviewDb == null)
+            {
+                return NotFound();
+            }
+
+            // Actualizo solo lo que corresponde
+            reviewDb.Rating = reviewEditar.Rating;
+            reviewDb.Comentario = reviewEditar.Comentario;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("MisReseñas", "Usuario"); // o "Review" según dónde esté tu acción
         }
+
 
         // GET: ReviewController/Delete/5
         public ActionResult Delete(int id)

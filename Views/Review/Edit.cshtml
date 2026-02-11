@@ -1,0 +1,132 @@
+﻿@model ProyectoFinal4.ViewModels.ReviewCreateViewModel
+
+@{
+    ViewData["Title"] = "Editar Reseña";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Review/editReview.css" asp-append-version="true" />
+}
+
+<div class="container-xl py-4 py-lg-5 edit-review-page">
+
+
+
+    <!-- Card centrada pero con ancho cómodo -->
+    <div class="mis-reseñas-wrapper">
+
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Home" asp-action="Index">Inicio</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-controller="Usuario" asp-action="MisReseñas">Mis Reseñas</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Reseña</li>
+            </ol>
+        </nav>
+
+
+        <div class="glass-card p-4 p-md-5">
+
+            <!-- Header -->
+            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                <span class="material-symbols-outlined icon-badge">edit</span>
+
+                <div class="flex-grow-1">
+                    <h1 class="h4 mb-1 text-white fw-bold">Editar Reseña</h1>
+                    <p class="mb-0 text-white-dim small">@Model.PeliculaTitulo</p>
+                </div>
+            </div>
+
+            <!-- Mini card película -->
+            <div class="movie-mini-card mb-4">
+                <div class="d-flex gap-3 align-items-start">
+                    <img class="movie-thumb"
+                         src="@Model.UrlImagenPelicula"
+                         alt="Poster @Model.PeliculaTitulo" />
+
+                    <div class="flex-grow-1">
+                        <h2 class="h6 text-white fw-bold mb-1">@Model.PeliculaTitulo</h2>
+                        <p class="mb-0 text-white-dim small">
+                            Estás editando tu reseña para esta película.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-controller="Review" asp-action="Edit" method="post" novalidate>
+                @Html.AntiForgeryToken()
+
+                <!-- Hidden necesarios para editar -->
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="PeliculaId" />
+                <input type="hidden" asp-for="UsuarioId" />
+                <input type="hidden" asp-for="PeliculaTitulo" />
+                <input type="hidden" asp-for="UrlImagenPelicula" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                <!-- Rating -->
+                <div class="mb-4">
+                    <label class="form-label d-block mb-2">Tu calificación</label>
+
+                    <div class="create-review-rating" aria-label="Calificación por estrellas">
+                        <input type="radio" asp-for="Rating" value="5" id="cr-star5" />
+                        <label for="cr-star5" class="create-review-star" title="5 estrellas">★</label>
+
+                        <input type="radio" asp-for="Rating" value="4" id="cr-star4" />
+                        <label for="cr-star4" class="create-review-star" title="4 estrellas">★</label>
+
+                        <input type="radio" asp-for="Rating" value="3" id="cr-star3" />
+                        <label for="cr-star3" class="create-review-star" title="3 estrellas">★</label>
+
+                        <input type="radio" asp-for="Rating" value="2" id="cr-star2" />
+                        <label for="cr-star2" class="create-review-star" title="2 estrellas">★</label>
+
+                        <input type="radio" asp-for="Rating" value="1" id="cr-star1" />
+                        <label for="cr-star1" class="create-review-star" title="1 estrella">★</label>
+                    </div>
+
+                    <span asp-validation-for="Rating" class="text-danger small"></span>
+                </div>
+
+                <!-- Comentario -->
+                <div class="mb-4">
+                    <label asp-for="Comentario" class="form-label">Comentario</label>
+
+                    <textarea asp-for="Comentario"
+                              class="form-control custom-textarea"
+                              rows="6"
+                              placeholder="Escribí tu opinión sobre la película..."></textarea>
+
+                    <span asp-validation-for="Comentario" class="text-danger small"></span>
+                </div>
+
+                <!-- Acciones -->
+                <div class="d-flex justify-content-end gap-2 pt-3 border-top border-secondary border-opacity-25">
+                    <a class="btn btn-outline-light btn-cancel d-inline-flex align-items-center gap-2"
+                       asp-controller="Usuario" asp-action="MisReseñas">
+                        <span class="material-symbols-outlined" style="font-size:18px;">close</span>
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-size:18px;">save</span>
+                        Guardar cambios
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

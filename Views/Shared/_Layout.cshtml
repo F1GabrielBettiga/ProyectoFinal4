@@ -1,5 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity @*esto es para poder validar el usuario*@ @*con esto podemos ver si el susuario esta logeado*@
 @inject SignInManager<Usuario> SignInManager 
+@inject UserManager<Usuario> UserManager //*esto es para optener los datos del ususario*@
+@{
+    bool isLoggedIn = SignInManager.IsSignedIn(User);
+
+    Usuario? usuarioActual = null;
+
+    if (isLoggedIn)
+    {
+        usuarioActual = await UserManager.GetUserAsync(User);
+    }
+
+}
 
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
@@ -127,6 +139,17 @@
                                 Plataformas
                             </a>
                         </li>
+                        @*Aca chequeamos si hay un usuario logeado*@
+                        @if (isLoggedIn)
+                        {
+                            <li class="nav-item">
+                                <a class="@NavClass("Usuario", "MisReseñas")"
+                                   asp-controller="Usuario" asp-action="MisReseñas">
+                                    Mis Reseñas
+                                </a>
+                            </li>
+                        
+                        }
 
                         
                     </ul>
@@ -135,18 +158,18 @@
                     <div class="d-flex align-items-center gap-3">
 
                         @*Aca chequeamos si hay un usuario logeado*@
-                        @if (SignInManager.IsSignedIn(User))
+                        @if (isLoggedIn)
                         {
                             <!-- User dropdown (decorativo por ahora) -->
                             <div class="dropdown">
                                 <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                                    href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="text-end me-2 d-none d-lg-block" style="line-height:1;">
-                                        <div class="fw-medium small">Alex Morgan</div>
+                                        <div class="fw-medium small">@usuarioActual.Nombre @usuarioActual.Apellido</div>
                                         <div class="small text-secondary" style="font-size:0.75rem;">Administrator</div>
                                     </div>
 
-                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb-mg7AAy9GB75Ut06P9IsLHmJ3mfO6_KiJQGYXdJlt2lSQJ3smUfgNiMZLk_sD7-P3AhlOQnF_GXZRt9LdEgR8LxM-XE1Wl063VT0wThXhy8Pk6WMg_o8Z7K5qhEbnO5j-ocrSW_nuYp6XCjpNvm413VUIiLebt3a-06yRlNXDigV7XnGbQs5s2AbU5N4GMpP3SQYohOMhbDzr1-kVYeF3u7EbdGo3wBpz9OZDooEwwrXIsIh4Bz4FCGQ-H3TwGnXAXP30Q-x5GxM"
+                                    <img src=@usuarioActual.ImagenUrlPerfil
                                          alt="User" width="36" height="36"
                                          class="rounded-circle border border-2 border-secondary" />
                                 </a>

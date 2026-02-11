@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ProyectoFinal4.Models.Review>
+
+@{
+    ViewData["Title"] = "Mis Reseñas";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/Usuario/misResenas.css" asp-append-version="true" />
+}
+
+<div class="container-xl my-reviews-page">
+
+    <header class="mb-4">
+        <h1 class="header-title text-white h2">Mis Reseñas</h1>
+        <p class="text-secondary-custom">Gestioná tus comentarios y calificaciones de películas.</p>
+    </header>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="glass-panel rounded-4 p-4">
+            <p class="mb-0 text-secondary-custom">
+                Todavía no tenés reseñas creadas.
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var r in Model)
+            {
+                <div class="col-12">
+                    <div class="glass-panel rounded-4 shadow p-3 p-md-4">
+                        <div class="row g-4 align-items-start">
+
+                            <div class="col-12 col-md-3">
+                                <a asp-controller="Home" asp-action="Details" asp-route-id="@r.PeliculaId" class="poster-link">
+                                    <img class="img-fluid rounded-3 movie-poster shadow-sm"
+                                         src="@r.Pelicula.PosterUrlPortada"
+                                         alt="@r.Pelicula.Titulo" />
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-md-9">
+                                <div class="d-flex flex-column h-100">
+
+                                    <div class="mb-2">
+                                        <h3 class="h5 text-white mb-1 d-flex align-items-center gap-2">
+                                            <span class="material-symbols-outlined text-secondary-custom fs-5">movie</span>
+                                            @r.Pelicula.Titulo
+                                        </h3>
+
+                                        <div class="text-secondary-custom small mb-2">
+                                            @r.FechaReview.ToString("dd/MM/yyyy")
+                                        </div>
+
+                                        <div class="star-rating-radio mb-3">
+                                            @for (int i = 5; i >= 1; i--)
+                                            {
+                                                var inputId = $"rating_{r.Id}_{i}";
+                                                <input type="radio"
+                                                       id="@inputId"
+                                                       name="rating_@r.Id"
+                                                       value="@i"
+                                                       checked="@(r.Rating == i)"
+                                                       disabled />
+                                                <label for="@inputId">★</label>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <p class="text-secondary-custom lh-base mb-0">
+                                            @r.Comentario
+                                        </p>
+                                    </div>
+
+                                    <div class="mt-auto">
+                                        <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3"
+                                           asp-controller="Review"
+                                           asp-action="Edit"
+                                           asp-route-idReview="@r.Id">
+                                            <span class="material-symbols-outlined fs-6">edit</span>
+                                            Editar
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>

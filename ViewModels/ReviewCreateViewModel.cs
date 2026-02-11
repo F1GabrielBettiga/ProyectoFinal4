@@ -18,6 +18,8 @@ namespace ProyectoFinal4.ViewModels
         [Required(ErrorMessage = "El comentario es obligatorio")]
         public string Comentario { get; set; } = string.Empty;
 
+        public string? UrlImagenPelicula { get; set; }
+        
 
 
     }

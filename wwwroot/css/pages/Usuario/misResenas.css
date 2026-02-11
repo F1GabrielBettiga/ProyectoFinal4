@@ -1,0 +1,99 @@
+﻿:root {
+    --bg-dark: #0b1118;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --star-gold: #ffc107;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e9ecef;
+    font-family: 'Inter', sans-serif;
+}
+
+.my-reviews-page {
+    padding-top: 0.5rem;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+    .glass-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+.header-title {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.text-secondary-custom {
+    color: #9fa6ad;
+}
+
+.material-symbols-outlined {
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.movie-poster {
+    width: 100%;
+    max-width: 180px;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: opacity 0.2s;
+}
+
+.poster-link:hover .movie-poster {
+    opacity: 0.85;
+}
+
+/* Botón outline primary custom */
+.btn-outline-primary {
+    border-color: #3d8bfd;
+    color: #3d8bfd;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #3d8bfd;
+        border-color: #3d8bfd;
+        color: #fff;
+    }
+
+/* =========================
+   Rating SOLO LECTURA (radio + labels)
+   ========================= */
+.star-rating-radio {
+    display: inline-flex;
+    flex-direction: row-reverse; /* clave para que el ~ pinte correctamente */
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2px;
+    user-select: none;
+}
+
+    /* oculto radios */
+    .star-rating-radio input[type="radio"] {
+        display: none;
+    }
+
+    /* estrella */
+    .star-rating-radio label {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.25);
+        margin: 0;
+        cursor: default; /* solo lectura */
+        line-height: 1;
+    }
+
+    /* pintado según checked */
+    .star-rating-radio input[type="radio"]:checked ~ label {
+        color: var(--star-gold);
+    }

@@ -102,6 +102,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdGFmb3JtYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Review/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Review/_CreateReview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XF9DcmVhdGVSZXZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -120,6 +124,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Usuario/MiPerfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xNaVBlcmZpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Usuario/MisReseñas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xNaXNSZXNlw7Fhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gabriel Bettiga/Documents/Curso Maxi Programa/Nivel 4/ProyectoFinal4/ProyectoFinal4/Views/Usuario/Registro.cshtml]
