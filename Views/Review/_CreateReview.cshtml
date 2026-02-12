@@ -1,64 +1,82 @@
 ﻿@model ProyectoFinal4.ViewModels.ReviewCreateViewModel
 
 @section Styles {
-    <link rel="stylesheet" href="/css/pages/Home/_CreateReview.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/Home/_createReview.css" asp-append-version="true" />
 }
 
 <div class="modal fade" id="createReviewModal" tabindex="-1" aria-labelledby="createReviewModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="createReviewModalLabel">Crear Reseña - @Model.PeliculaTitulo</h1>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content create-review-modal rounded-4">
+
+            <div class="modal-header p-4">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined create-review-icon">rate_review</span>
+                    <h5 class="modal-title fw-bold" id="createReviewModalLabel">
+                        Crear Reseña - @Model.PeliculaTitulo
+                    </h5>
+                </div>
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form asp-controller="Review" asp-action="Create" method="post">
-                <div class="modal-body">
+            <form asp-controller="Review" asp-action="Create" method="post" novalidate>
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body p-4 pt-2">
 
                     <input type="hidden" asp-for="PeliculaId" />
 
-                    <div class="mb-3">
-                        <label class="form-label">Calificación</label>
+                    <!-- Rating -->
+                    <div class="mb-4 mt-2">
+                        <label class="form-label d-block mb-2 fw-medium">Tu Calificación</label>
 
-                        <!-- Rating del modal (clases propias para NO chocar con la vista detalle) -->
+                        <!-- Izquierda a derecha: 1 → 5 -->
                         <div class="create-review-rating" aria-label="Calificación por estrellas">
-                            <input type="radio" asp-for="Rating" value="5" id="cr-star5" />
-                            <label for="cr-star5" class="create-review-star" title="5 estrellas">★</label>
-
-                            <input type="radio" asp-for="Rating" value="4" id="cr-star4" />
-                            <label for="cr-star4" class="create-review-star" title="4 estrellas">★</label>
-
-                            <input type="radio" asp-for="Rating" value="3" id="cr-star3" />
-                            <label for="cr-star3" class="create-review-star" title="3 estrellas">★</label>
+                            <input type="radio" asp-for="Rating" value="1" id="cr-star1" />
+                            <label for="cr-star1" class="create-review-star" title="1 estrella">★</label>
 
                             <input type="radio" asp-for="Rating" value="2" id="cr-star2" />
                             <label for="cr-star2" class="create-review-star" title="2 estrellas">★</label>
 
-                            <input type="radio" asp-for="Rating" value="1" id="cr-star1" />
-                            <label for="cr-star1" class="create-review-star" title="1 estrella">★</label>
+                            <input type="radio" asp-for="Rating" value="3" id="cr-star3" />
+                            <label for="cr-star3" class="create-review-star" title="3 estrellas">★</label>
+
+                            <input type="radio" asp-for="Rating" value="4" id="cr-star4" />
+                            <label for="cr-star4" class="create-review-star" title="4 estrellas">★</label>
+
+                            <input type="radio" asp-for="Rating" value="5" id="cr-star5" />
+                            <label for="cr-star5" class="create-review-star" title="5 estrellas">★</label>
                         </div>
 
-                        <span asp-validation-for="Rating" class="text-danger"></span>
+                        <div class="form-text text-muted small mt-1">Elegí de 1 a 5 estrellas</div>
+                        <span asp-validation-for="Rating" class="text-danger small d-block mt-1"></span>
                     </div>
 
+                    <!-- Comentario -->
                     <div class="mb-3">
-                        <label asp-for="Comentario" class="form-label">Comentario</label>
+                        <label asp-for="Comentario" class="form-label fw-medium">Tu Comentario</label>
+
                         <textarea asp-for="Comentario"
-                                  class="form-control"
-                                  rows="4"
-                                  placeholder="Comparte tu opinión"></textarea>
-                        <span asp-validation-for="Comentario" class="text-danger"></span>
+                                  class="form-control create-review-textarea"
+                                  rows="5"
+                                  placeholder="Comparte tu opinión sobre la película..."></textarea>
+
+                        <span asp-validation-for="Comentario" class="text-danger small mt-1 d-block"></span>
                     </div>
 
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                <div class="modal-footer p-3">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn btn-primary px-4">
+                        Publicar Reseña
+                    </button>
                 </div>
             </form>
 
         </div>
     </div>
 </div>
-

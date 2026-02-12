@@ -1,4 +1,14 @@
-﻿@model ProyectoFinal4.Models.Pelicula
+﻿@using Microsoft.AspNetCore.Identity
+
+@model ProyectoFinal4.Models.Pelicula
+@inject SignInManager<Usuario> SignInManager
+
+@{
+    bool isLoggedIn = SignInManager.IsSignedIn(User);
+}
+
+
+
 
 @{
 
@@ -134,13 +144,13 @@
                         <div class="review-card">
                             <div class="d-flex gap-3 align-items-start">
                                 <img src=@item.Usuario.ImagenUrlPerfil
-                                class="user-avatar"
-                                alt="Imagen Usuario">
+                                     class="user-avatar"
+                                     alt="Imagen Usuario">
 
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between mb-1">
                                         <div>
-                                        <h5 class="mb-0 fs-6 fw-bold">@item.Usuario.Nombre @item.Usuario.Apellido </h5>
+                                            <h5 class="mb-0 fs-6 fw-bold">@item.Usuario.Nombre @item.Usuario.Apellido </h5>
                                             <span class="text-muted small">@item.FechaReview.ToString("dd/MM/yyyy")</span>
                                         </div>
                                         <div class="rating-stars">
@@ -156,7 +166,7 @@
                                                     <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0">star</span>
                                                 }
                                             }
-                                            
+
                                         </div>
                                     </div>
 
@@ -172,12 +182,25 @@
                 <!-- Acciones -->
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <!-- BTN AGREGAR RESEÑA -->
-                        <button  class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" type="button"
-                                data-bs-toggle="modal" data-bs-target="#createReviewModal">
-                            <span class="material-symbols-outlined">edit</span>Crear Reseña
-                        </button>
-                        
+                        @if (isLoggedIn)
+                        {
+                            <!-- BTN AGREGAR RESEÑA ACTIVADO-->
+                            <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" 
+                                    type="button"
+                                    data-bs-toggle="modal" data-bs-target="#createReviewModal">
+                                <span class="material-symbols-outlined">edit</span>Crear Reseña
+                            </button>
+                        }
+                        else
+                        {
+                            <!-- BTN AGREGAR RESEÑA DESACTIVADO -->
+                            <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2"
+                                    type="button"
+                                    disabled>
+                                <span class="material-symbols-outlined">edit</span>Inicia sesión para crear reseñar
+                            </button>
+
+                        }
                     </div>
 
                     <div class="col-sm-6">

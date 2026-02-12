@@ -1,0 +1,86 @@
+﻿:root {
+    --bg-dark: #0b1118;
+    --accent-red: #ec1313;
+    --glass-bg: rgba(30, 35, 45, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Si tu layout ya setea el body, esto no molesta; igual lo dejo liviano */
+body {
+    background-color: var(--bg-dark);
+}
+
+/* Patrón de fondo */
+.bg-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+.access-denied-panel {
+    max-width: 600px;
+    width: 100%;
+    border-top: 4px solid var(--accent-red);
+    position: relative;
+}
+
+.icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(236, 19, 19, 0.1);
+    color: var(--accent-red);
+    margin-bottom: 2rem;
+    box-shadow: 0 0 30px rgba(236, 19, 19, 0.25);
+    animation: pulse-red 2s infinite;
+}
+
+.material-symbols-outlined.icon-large {
+    font-size: 48px;
+}
+
+.text-secondary-custom {
+    color: #aeb4be;
+}
+
+/* OJO: esto pisa el .btn-primary de Bootstrap SOLO en esta página */
+.access-denied-page .btn-primary {
+    background-color: var(--accent-red);
+    border-color: var(--accent-red);
+}
+
+    .access-denied-page .btn-primary:hover {
+        background-color: #c91010;
+        border-color: #b00e0e;
+    }
+
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(236, 19, 19, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(236, 19, 19, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(236, 19, 19, 0);
+    }
+}

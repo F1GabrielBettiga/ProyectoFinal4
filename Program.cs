@@ -53,8 +53,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 { 
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60); //tiempo de expiracion de la cookie, 60 minutos sin actividad → sesión muere
     options.SlidingExpiration = true; //renovar la cookie con cada request
-    options.LoginPath = "/Account/Login"; //ruta personalizada para el login
-    options.AccessDeniedPath = "/Account/AccessDenied"; //ruta personalizada para acceso denegado
+    options.LoginPath = "/Usuario/Login"; //ruta personalizada para el login
+    options.AccessDeniedPath = "/Usuario/AccessDenied"; //ruta personalizada para acceso denegado
 }); //si no colocamos estas rutas, usaria las por defecto de Identity que no tenemos porque no usamos la UI de Identity y no las encotraria 
 
 

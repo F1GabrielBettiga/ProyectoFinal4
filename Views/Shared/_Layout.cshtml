@@ -1,6 +1,13 @@
-﻿@using Microsoft.AspNetCore.Identity @*esto es para poder validar el usuario*@ @*con esto podemos ver si el susuario esta logeado*@
-@inject SignInManager<Usuario> SignInManager 
-@inject UserManager<Usuario> UserManager //*esto es para optener los datos del ususario*@
+﻿@using Microsoft.AspNetCore.Identity
+@* esto es para poder validar el usuario *@
+@* con esto podemos ver si el usuario esta logeado *@
+
+@inject SignInManager<Usuario> SignInManager
+
+@* esto es para obtener los datos del usuario *@
+@inject UserManager<Usuario> UserManager
+
+
 @{
     bool isLoggedIn = SignInManager.IsSignedIn(User);
 
@@ -10,7 +17,6 @@
     {
         usuarioActual = await UserManager.GetUserAsync(User);
     }
-
 }
 
 <!DOCTYPE html>
@@ -52,7 +58,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-            /* Extra: hover y active más prolijo */
             .navbar .nav-link {
                 transition: color .15s ease, opacity .15s ease;
             }
@@ -85,7 +90,7 @@
                          style="width:32px;height:32px;">
                         <span class="material-symbols-outlined fs-5 text-white">movie_filter</span>
                     </div>
-                    CineManage
+                    CineLog
                 </a>
 
                 <!-- Toggler -->
@@ -115,31 +120,11 @@
                         <li class="nav-item">
                             <a class="@NavClass("Home", "Index")"
                                asp-controller="Home" asp-action="Index">
-                                Inicio
+                                Home
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="@NavClass("Pelicula", "Index")"
-                               asp-controller="Pelicula" asp-action="Index">
-                                Películas
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="@NavClass("Genero", "Index")"
-                               asp-controller="Genero" asp-action="Index">
-                                Géneros
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="@NavClass("Plataforma", "Index")"
-                               asp-controller="Plataforma" asp-action="Index">
-                                Plataformas
-                            </a>
-                        </li>
-                        @*Aca chequeamos si hay un usuario logeado*@
+                        @* Acá chequeamos si hay un usuario logeado *@
                         @if (isLoggedIn)
                         {
                             <li class="nav-item">
@@ -148,41 +133,83 @@
                                     Mis Reseñas
                                 </a>
                             </li>
-                        
                         }
-
-                        
                     </ul>
 
                     <!-- Right side -->
                     <div class="d-flex align-items-center gap-3">
 
-                        @*Aca chequeamos si hay un usuario logeado*@
-                        @if (isLoggedIn)
+                        @if (isLoggedIn && usuarioActual != null)
                         {
-                            <!-- User dropdown (decorativo por ahora) -->
                             <div class="dropdown">
                                 <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                                    href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+
                                     <div class="text-end me-2 d-none d-lg-block" style="line-height:1;">
                                         <div class="fw-medium small">@usuarioActual.Nombre @usuarioActual.Apellido</div>
                                         <div class="small text-secondary" style="font-size:0.75rem;">
-                                            @if (await UserManager.IsInRoleAsync(usuarioActual, "Admin")) { <span>Administrador</span>} else { }
-                                            
+                                            @if (await UserManager.IsInRoleAsync(usuarioActual, "Admin"))
+                                            {
+                                                <span>Administrador</span>
+                                            }
+                                            else
+                                            {
+                                                @* no mostramos nada *@
+                                            }
                                         </div>
-                                  </div>
+                                    </div>
 
-                                    <img src=@usuarioActual.ImagenUrlPerfil
+                                    <img src="@usuarioActual.ImagenUrlPerfil"
                                          alt="User" width="36" height="36"
                                          class="rounded-circle border border-2 border-secondary" />
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
 
-                                   @*MI PERFIL*@
-                                    <li> <a asp-controller="Usuario" asp-action="MiPerfil" title="Perfil" class="dropdown-item">Perfil</a></li>
+                                    @* MI PERFIL *@
+                                    <li>
+                                        <a asp-controller="Usuario" asp-action="MiPerfil"
+                                           title="Perfil" class="dropdown-item">
+                                            Perfil
+                                        </a>
+                                    </li>
+
+                                    @* ======= DROPDOWN SOLO PARA ADMIN ======= *@
+                                    @if (await UserManager.IsInRoleAsync(usuarioActual, "Admin"))
+                                    {
+                                        <li><hr class="dropdown-divider" /></li>
+
+                                        <li class="dropdown-header text-secondary">
+                                            Panel Admin
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                               asp-controller="Pelicula" asp-action="Index">
+                                                Gestión de Películas
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                               asp-controller="Plataforma" asp-action="Index">
+                                                Gestión de Plataformas
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                               asp-controller="Genero" asp-action="Index">
+                                                Gestión de Géneros
+                                            </a>
+                                        </li>
+
+                                    }
+                                    @* ======================================= *@
+
                                     <li><hr class="dropdown-divider" /></li>
-                                    @*CERRAR SESION*@
+
+                                    @* CERRAR SESION *@
                                     <li>
                                         <form asp-controller="Usuario"
                                               asp-action="Logout"
@@ -191,7 +218,7 @@
                                             @Html.AntiForgeryToken()
 
                                             <button type="submit" class="dropdown-item">
-                                                Cerrar Sesion
+                                                Cerrar Sesión
                                             </button>
                                         </form>
                                     </li>
@@ -209,14 +236,13 @@
                                 Registrarse
                             </a>
                         }
-                        
+
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
-   
     <div class="container-fluid p-0">
         <main role="main">
             @RenderBody()
@@ -225,7 +251,8 @@
 
     <footer class="border-top footer text-muted mt-5">
         <div class="container-fluid px-4 py-3">
-            &copy; 2026 - ProyectoFinal4 - <a class="text-decoration-none" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - ProyectoFinal4 -
+            <a class="text-decoration-none" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

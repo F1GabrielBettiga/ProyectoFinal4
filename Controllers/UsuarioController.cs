@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -9,7 +10,7 @@ using ProyectoFinal4.ViewModels;
 
 namespace ProyectoFinal4.Controllers
 {
-
+    [Authorize]
     public class UsuarioController : Controller
 
     {
@@ -26,12 +27,12 @@ namespace ProyectoFinal4.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
-
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken] //Esto es para evitar ataques CSRF
         public async Task<IActionResult> Login(LoginViewModel usuario)
@@ -55,11 +56,12 @@ namespace ProyectoFinal4.Controllers
             return View(usuario);
         }
 
+        [AllowAnonymous]
         public IActionResult Registro()
         {
             return View();
         }
-
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken] //Esto es para evitar ataques CSRF
         public async Task<IActionResult> Registro(UsuarioViewModel usuario)
@@ -93,6 +95,8 @@ namespace ProyectoFinal4.Controllers
 
             return View(usuario);
         }
+
+        
         [HttpGet]
         public async Task<IActionResult> MiPerfil()
         {
@@ -113,7 +117,7 @@ namespace ProyectoFinal4.Controllers
             return View(vm); // esto abre Views/Usuario/MiPerfil.cshtml
         }
 
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ActualizarPerfil(MiPerfilViewModel usuarioVM)
@@ -161,7 +165,7 @@ namespace ProyectoFinal4.Controllers
             TempData["MensajePerfil"] = "Perfil actualizado correctamente.";
             return RedirectToAction(nameof(MiPerfil));
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CambiarClave(MiPerfilClaveViewModel model)
@@ -197,7 +201,7 @@ namespace ProyectoFinal4.Controllers
         }
 
 
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -211,7 +215,7 @@ namespace ProyectoFinal4.Controllers
             return View();
         }
 
-
+        
         [HttpGet]
         public async Task<IActionResult> MisReseñas()
         {
@@ -228,7 +232,7 @@ namespace ProyectoFinal4.Controllers
 
             return View(listaDeReseñas);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MisReseñas(int id)

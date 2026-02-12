@@ -9,6 +9,7 @@ using ProyectoFinal4.ViewModels;
 
 namespace ProyectoFinal4.Controllers
 {
+    [Authorize]
     public class ReviewController : Controller
     {
         private readonly UserManager<Usuario> _userManager;

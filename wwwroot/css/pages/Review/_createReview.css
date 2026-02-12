@@ -1,0 +1,137 @@
+﻿:root {
+    --primary-color: #0d6efd;
+    --bg-dark: #0b1118;
+    --glass-bg: rgba(22, 27, 34, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-muted: #9ca3af;
+    --star-gold: #fbbf24;
+}
+
+/* Modal "glass" */
+.create-review-modal {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+    .create-review-modal .modal-header {
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .create-review-modal .modal-footer {
+        border-top: 1px solid var(--glass-border);
+    }
+
+    .create-review-modal .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+.create-review-icon {
+    font-size: 28px;
+    color: var(--primary-color);
+}
+
+/* Textarea */
+.create-review-textarea {
+    background-color: rgba(0, 0, 0, 0.30);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    padding: 1rem;
+}
+
+    .create-review-textarea:focus {
+        background-color: rgba(0, 0, 0, 0.40);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        color: #fff;
+    }
+
+    .create-review-textarea::placeholder {
+        color: #6b7280;
+    }
+
+/* Estrellas: izquierda a derecha */
+.create-review-rating {
+    display: inline-flex;
+    flex-direction: row; /* clave */
+    justify-content: flex-start;
+    gap: 4px;
+    user-select: none;
+}
+
+    .create-review-rating input[type="radio"] {
+        display: none;
+    }
+
+.create-review-star {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    line-height: 1;
+}
+
+    /* Hover: ilumina la estrella actual y las anteriores (izquierda) */
+    .create-review-star:hover {
+        color: var(--star-gold);
+    }
+
+        .create-review-star:hover ~ .create-review-star {
+            /* en row normal, los "siguientes" están a la derecha, NO queremos pintarlos */
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+/* Para iluminar "hacia la izquierda" con CSS puro, usamos :has (si tu navegador lo soporta).
+   Si querés compat total, te lo hago con 10 líneas de JS. */
+.create-review-rating:has(#cr-star2:hover) #cr-star1 + label,
+.create-review-rating:has(#cr-star3:hover) #cr-star1 + label,
+.create-review-rating:has(#cr-star3:hover) #cr-star2 + label,
+.create-review-rating:has(#cr-star4:hover) #cr-star1 + label,
+.create-review-rating:has(#cr-star4:hover) #cr-star2 + label,
+.create-review-rating:has(#cr-star4:hover) #cr-star3 + label,
+.create-review-rating:has(#cr-star5:hover) #cr-star1 + label,
+.create-review-rating:has(#cr-star5:hover) #cr-star2 + label,
+.create-review-rating:has(#cr-star5:hover) #cr-star3 + label,
+.create-review-rating:has(#cr-star5:hover) #cr-star4 + label {
+    color: var(--star-gold);
+}
+
+/* Checked: pinta la estrella elegida y todas las anteriores */
+.create-review-rating:has(#cr-star1:checked) label[for="cr-star1"],
+.create-review-rating:has(#cr-star2:checked) label[for="cr-star1"],
+.create-review-rating:has(#cr-star2:checked) label[for="cr-star2"],
+.create-review-rating:has(#cr-star3:checked) label[for="cr-star1"],
+.create-review-rating:has(#cr-star3:checked) label[for="cr-star2"],
+.create-review-rating:has(#cr-star3:checked) label[for="cr-star3"],
+.create-review-rating:has(#cr-star4:checked) label[for="cr-star1"],
+.create-review-rating:has(#cr-star4:checked) label[for="cr-star2"],
+.create-review-rating:has(#cr-star4:checked) label[for="cr-star3"],
+.create-review-rating:has(#cr-star4:checked) label[for="cr-star4"],
+.create-review-rating:has(#cr-star5:checked) label[for="cr-star1"],
+.create-review-rating:has(#cr-star5:checked) label[for="cr-star2"],
+.create-review-rating:has(#cr-star5:checked) label[for="cr-star3"],
+.create-review-rating:has(#cr-star5:checked) label[for="cr-star4"],
+.create-review-rating:has(#cr-star5:checked) label[for="cr-star5"] {
+    color: var(--star-gold);
+}
+
+/* Botones */
+.create-review-modal .btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    font-weight: 500;
+}
+
+.create-review-modal .btn-secondary {
+    background-color: #374151;
+    border: 1px solid #4b5563;
+    color: #e5e7eb;
+}
+
+    .create-review-modal .btn-secondary:hover {
+        background-color: #4b5563;
+        border-color: #6b7280;
+    }
