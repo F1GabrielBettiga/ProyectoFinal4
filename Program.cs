@@ -62,7 +62,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<ImagenStorage>(); 
 builder.Services.Configure<FormOptions>(o => { o.MultipartBodyLengthLimit = 2 * 1024 * 1024; }); //limite de 2 MB para las imagenes
 
-
+//Servicio LLM
+builder.Services.AddScoped<LlmService>();
 
 var app = builder.Build();
 

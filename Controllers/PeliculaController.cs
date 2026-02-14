@@ -289,5 +289,7 @@ namespace ProyectoFinal4.Controllers
         {
             return _context.Peliculas.Any(e => e.Id == id);
         }
+
+
     }
 }

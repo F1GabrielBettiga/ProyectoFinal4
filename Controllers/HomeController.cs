@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal4.Data;
 using ProyectoFinal4.Models;
+using ProyectoFinal4.Service;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace ProyectoFinal4.Controllers
     public class HomeController : Controller
     {
         private readonly MovieDbContext _context;
+        private readonly LlmService _llmService;
 
-        public HomeController(MovieDbContext context)
+        public HomeController(MovieDbContext context, LlmService llmService)
         {
             _context = context;
+            _llmService = llmService;
         }
 
         //GET
@@ -182,6 +185,21 @@ namespace ProyectoFinal4.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Spoiler(string titulo)
+        {
+            try
+            {
+                var spoiler = await _llmService.ObtenerSpoilerAsync(titulo);
+                return Json(new { success = true, data = spoiler });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
     }
 }

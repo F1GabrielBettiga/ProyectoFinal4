@@ -1,12 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@* esto es para poder validar el usuario *@
-@* con esto podemos ver si el usuario esta logeado *@
-
 @inject SignInManager<Usuario> SignInManager
-
-@* esto es para obtener los datos del usuario *@
 @inject UserManager<Usuario> UserManager
-
 
 @{
     bool isLoggedIn = SignInManager.IsSignedIn(User);
@@ -39,7 +33,7 @@
     <!-- CSS por vista -->
     @RenderSection("Styles", required: false)
 
-    <!-- Estilo global  -->
+    <!-- Estilo global -->
     <style>
         :root {
             --bs-body-font-family: 'Inter', sans-serif;
@@ -47,15 +41,32 @@
             --bs-body-color: #f8f9fa;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             font-family: var(--bs-body-font-family);
             background-color: var(--bs-body-bg);
             color: var(--bs-body-color);
+            /* ✅ IMPORTANTE: para que la navbar fija NO tape el contenido */
+            padding-top: 76px; /* ajustá a 72/80 si querés */
         }
 
+        /* ✅ Navbar fija arriba */
         .navbar {
             background-color: rgba(17, 20, 24, 0.95) !important;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            /* “fija” + arriba + por encima de todo */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1030;
+            /* Opcional: queda más premium */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
             .navbar .nav-link {
@@ -79,8 +90,8 @@
 
 <body>
     <header>
-        <!-- NAVBAR  -->
-        <nav class="navbar navbar-expand-lg sticky-top mb-4">
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid px-4">
 
                 <!-- Brand -->
@@ -103,7 +114,6 @@
                 <!-- Links -->
                 <div class="collapse navbar-collapse" id="navbarContent">
 
-                    @* ====== ACTIVO AUTOMÁTICO====== *@
                     @{
                         var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
                         var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
@@ -116,7 +126,6 @@
                     }
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
-
                         <li class="nav-item">
                             <a class="@NavClass("Home", "Index")"
                                asp-controller="Home" asp-action="Index">
@@ -124,7 +133,6 @@
                             </a>
                         </li>
 
-                        @* Acá chequeamos si hay un usuario logeado *@
                         @if (isLoggedIn)
                         {
                             <li class="nav-item">
@@ -152,10 +160,6 @@
                                             {
                                                 <span>Administrador</span>
                                             }
-                                            else
-                                            {
-                                                @* no mostramos nada *@
-                                            }
                                         </div>
                                     </div>
 
@@ -165,8 +169,6 @@
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-
-                                    @* MI PERFIL *@
                                     <li>
                                         <a asp-controller="Usuario" asp-action="MiPerfil"
                                            title="Perfil" class="dropdown-item">
@@ -174,42 +176,32 @@
                                         </a>
                                     </li>
 
-                                    @* ======= DROPDOWN SOLO PARA ADMIN ======= *@
                                     @if (await UserManager.IsInRoleAsync(usuarioActual, "Admin"))
                                     {
                                         <li><hr class="dropdown-divider" /></li>
-
-                                        <li class="dropdown-header text-secondary">
-                                            Panel Admin
-                                        </li>
+                                        <li class="dropdown-header text-secondary">Panel Admin</li>
 
                                         <li>
-                                            <a class="dropdown-item"
-                                               asp-controller="Pelicula" asp-action="Index">
-                                                Gestión de Películas
+                                            <a class="dropdown-item" asp-controller="Pelicula" asp-action="Index">
+                                                Películas
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item"
-                                               asp-controller="Plataforma" asp-action="Index">
-                                                Gestión de Plataformas
+                                            <a class="dropdown-item" asp-controller="Plataforma" asp-action="Index">
+                                                Plataformas
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item"
-                                               asp-controller="Genero" asp-action="Index">
-                                                Gestión de Géneros
+                                            <a class="dropdown-item" asp-controller="Genero" asp-action="Index">
+                                                Géneros
                                             </a>
                                         </li>
-
                                     }
-                                    @* ======================================= *@
 
                                     <li><hr class="dropdown-divider" /></li>
 
-                                    @* CERRAR SESION *@
                                     <li>
                                         <form asp-controller="Usuario"
                                               asp-action="Logout"
@@ -262,3 +254,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

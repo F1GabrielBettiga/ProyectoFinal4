@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LAO6D54/QpU=",
+  "dgSpecHash": "VjLH1YHH/NE=",
   "success": true,
   "projectFilePath": "C:\\Users\\Gabriel Bettiga\\Documents\\Curso Maxi Programa\\Nivel 4\\ProyectoFinal4\\ProyectoFinal4\\ProyectoFinal4.csproj",
   "expectedPackageFiles": [
@@ -114,8 +114,9 @@
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\nuget.projectmodel\\6.12.1\\nuget.projectmodel.6.12.1.nupkg.sha512",
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\nuget.protocol\\6.12.1\\nuget.protocol.6.12.1.nupkg.sha512",
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\nuget.versioning\\6.12.1\\nuget.versioning.6.12.1.nupkg.sha512",
+    "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\openai\\2.5.0\\openai.2.5.0.nupkg.sha512",
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\sixlabors.imagesharp\\3.1.12\\sixlabors.imagesharp.3.1.12.nupkg.sha512",
-    "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\system.clientmodel\\1.5.1\\system.clientmodel.1.5.1.nupkg.sha512",
+    "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\system.clientmodel\\1.6.1\\system.clientmodel.1.6.1.nupkg.sha512",
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
     "C:\\Users\\Gabriel Bettiga\\.nuget\\packages\\system.composition.attributedmodel\\9.0.0\\system.composition.attributedmodel.9.0.0.nupkg.sha512",
