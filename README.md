@@ -9,6 +9,7 @@ Además, se incorporó inteligencia artificial para generar spoilers automático
 La aplicación cuenta con un panel administrativo protegido por autenticación y roles.
 
 🚀 Funcionalidades principales
+
 🎞️ Portal público
 
 Listado de películas con paginado
@@ -23,6 +24,7 @@ Visualización de reseñas de otros usuarios
 
 Generación de spoiler automático mediante IA (modal dinámico)
 
+
 👤 Usuarios registrados
 
 Registro e inicio de sesión
@@ -34,6 +36,7 @@ Publicación de reseñas
 Calificación por estrellas (1 a 5)
 
 Historial de reseñas realizadas
+
 
 🔐 Panel administrador
 
@@ -51,6 +54,7 @@ Gestión de plataformas
 
 Control total del contenido del sistema
 
+
 🤖 Integración de Inteligencia Artificial
 
 Se integró la API de OpenAI para generar automáticamente spoilers de películas.
@@ -64,6 +68,7 @@ Modal interactivo sin recargar la página
 Comunicación asíncrona mediante Fetch/AJAX
 
 Servicio dedicado (LlmService) para consumo de la API
+
 
 🛠️ Tecnologías utilizadas
 
@@ -91,6 +96,7 @@ Fetch API / AJAX
 
 API de OpenAI
 
+
 🔐 Seguridad
 
 El sistema implementa seguridad basada en:
@@ -103,6 +109,7 @@ Restricción de acceso a controladores administrativos
 
 Protección de formularios con AntiForgeryToken
 
+
 📐 Arquitectura
 
 La aplicación sigue el patrón MVC (Model – View – Controller):
@@ -114,6 +121,7 @@ Controller: manejo de peticiones, lógica de flujo y validaciones
 También se implementó una capa de servicios para la integración con IA:
 
 LlmService → Encapsula la comunicación con OpenAI.
+
 
 🗄️ Base de datos
 
@@ -135,6 +143,7 @@ Roles
 
 El sistema utiliza Entity Framework Core con migraciones para la generación y actualización de la base de datos.
 
+
 🌐 Experiencia de usuario
 
 La interfaz fue diseñada con enfoque en experiencia visual:
@@ -150,6 +159,7 @@ Navegación simple
 Navbar persistente
 
 Feedback visual al usuario
+
 
 👨‍🏫 Contexto académico
 
