@@ -1,4 +1,5 @@
 🎬 CineLog – Sistema de Reseñas de Películas | ASP.NET MVC + Identity + OpenAI
+
 📌 Descripción
 
 Aplicación web desarrollada en ASP.NET MVC con .NET y C#, orientada a una comunidad de usuarios que desean explorar películas y publicar reseñas.
